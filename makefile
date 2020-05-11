@@ -1,2 +1,2 @@
-include ./boilerplate/help.mk
-include ./boilerplate/gitr.mk
+include ./boilerplate/core/help.mk
+include ./boilerplate/core/gitr.mk

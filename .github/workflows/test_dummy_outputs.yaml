@@ -1,0 +1,41 @@
+name: Test Dummy Outputs
+on:
+  push:
+    branches: [ dummy ]
+jobs:
+  build:
+    name: Test dummy outputs
+    runs-on: ubuntu-latest
+    steps:
+      - name: setup env
+        shell: bash
+        run: |
+          echo "::set-env name=GOPATH::${{ github.workspace }}/go"
+          echo "::add-path::${{ github.workspace }}/go/bin"
+          mkdir -p ${{ github.workspace }}/go/{src,bin,pkg}
+
+      - name: Set up Go 1.x
+        uses: actions/setup-go@v2
+        with:
+          go-version: ^1.14
+        id: go
+
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+
+      - name: Get dependencies
+        run: |
+          go get -v -t -d ./...
+          if [ -f Gopkg.toml ]; then
+              curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+              dep ensure
+          fi
+      - name: Build Dummies (v1, v2)
+        run: make build-dummy
+
+      - name: Test output dummy v1
+        run: ./outputs/dummy-${{ github.sha }}-v1
+
+      - name: Test output dummy v2
+        run: ./outputs/dummy-${{ github.sha }}-v2
+

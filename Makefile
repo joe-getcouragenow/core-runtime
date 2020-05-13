@@ -18,6 +18,7 @@ build-dummy:
 	@echo "building dummy"
 	@go run multibuild.go -c $(PWD)/.tmp -o $(PWD)/outputs -f $(PWD)/tool/dummy/versions.json -g $(CUR_GIT_URL)
 
+## clean dummy builds
 build-dummy-clean:
 	@echo "clean build dummy"
 	@rm -rf $(PWD)/outputs $(PWD)/.tmp

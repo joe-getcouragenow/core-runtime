@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/getcouragenow/bootstrap/tool/protofig/generated/go"
 	"io/ioutil"
 	"log"
 	"os"

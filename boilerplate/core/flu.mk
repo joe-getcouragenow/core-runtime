@@ -174,7 +174,7 @@ flu-gen-lang-print:
 
 ## Grabs the bianry tool needed ( REDUNDANT when using BS tool )
 flu-gen-lang-dep:
-	go get -u github.com/getcouragenow/bootstrap/tool/i18n
+	go get -u github.com/getcouragenow/core-runtime/tool/i18n
 
 
 ## Generates language file for maintemplate and all submodules

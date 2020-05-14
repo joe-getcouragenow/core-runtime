@@ -1,5 +1,5 @@
-name: sys_core
-description: core functionalities for all modules
+name: mod_settings
+description: A new Flutter package project.
 version: 0.0.1
 author:
 homepage:
@@ -10,12 +10,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  # Architectural packages
-  # protobuf: ^1.0.1
-  intl: ^0.16.1
-  intl_translation: ^0.17.9
-  protobuf: ^1.0.1
+  sys_core:
+    path: ../../sys-core/client
+  flutter_modular: ^1.1.2
 
 dev_dependencies:
   flutter_test:

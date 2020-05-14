@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	config "github.com/getcouragenow/core-runtime/tool/protofig/generated/go"
 	"io/ioutil"
 	"log"
 	"os"

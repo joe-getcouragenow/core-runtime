@@ -7,7 +7,7 @@ class SettingsViewNew extends StatefulWidget {
 }
 
 class _SettingsViewNewState extends State<SettingsViewNew> {
-  CoreSettings _coreSettings = CoreSettings.instance;
+  CoreSettingsService _coreSettings = CoreSettingsService.instance;
 
   @override
   void initState() {
@@ -63,7 +63,7 @@ class _SettingsViewNewState extends State<SettingsViewNew> {
         if (item is ModuleConfigItemBool) {
           return SwitchListTile(
               title: Text(item.description),
-              value: moduleSettings.getModuleConfigItemBool(item.key).value,
+              value: moduleSettings.getBoolValue(item.key),
               onChanged: (v) => moduleSettings.setBoolValue(item.key, v));
         } else if (item is ModuleConfigItemDropdown) {
           return ListTile(
@@ -71,7 +71,7 @@ class _SettingsViewNewState extends State<SettingsViewNew> {
             trailing: DropdownButton<int>(
               value: item.value,
               onChanged: (int value) {
-                moduleSettings.setDropDownValue(item.key, value);
+                moduleSettings.setIntValue(item.key, value);
               },
               items: item.items
                   .map((String v) => DropdownMenuItem<int>(
@@ -86,7 +86,10 @@ class _SettingsViewNewState extends State<SettingsViewNew> {
           throw UnimplementedError();
         }
       }).toList(),
-      Divider(color: Colors.black,thickness: 3,),
+      Divider(
+        color: Colors.black,
+        thickness: 3,
+      ),
     ];
   }
 }

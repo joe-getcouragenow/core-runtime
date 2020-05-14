@@ -14,8 +14,18 @@ baseproto:
 		--validate_out="lang=go:generated/go/" \
 		api/baseproto.proto
 
+settingsproto:
+	protoc -I api/ \
+		-I ${GOPATH}/src \
+		-I ${GOPATH}/src/github.com/envoyproxy/protoc-gen-validate \
+		--go_out=":generated/go" \
+		--dart_out=":generated/dart" \
+		--validate_out="lang=go:generated/go/" \
+		api/settings.proto	
+
 ## Generate protobuf golang & dart code
 proto: baseproto
+	$(MAKE) settingsproto
 	protoc -I api/ \
 		-I ${GOPATH}/src \
 		-I ${GOPATH}/src/github.com/envoyproxy/protoc-gen-validate \

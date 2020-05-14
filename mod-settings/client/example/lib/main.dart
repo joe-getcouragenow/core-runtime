@@ -7,7 +7,7 @@ void main() async {
 
   await coreInit();
 
-  await CoreSettings.instance.registerModuleConfig(
+  await CoreSettingsService.instance.registerModuleConfig(
     ModuleConfig(moduleID: "ExampleModuleID", moduleName: "Example Module")
       ..addModuleConfigItems(
         [
@@ -19,7 +19,7 @@ void main() async {
       ),
   );
 
-  await CoreSettings.instance.registerModuleConfig(
+  await CoreSettingsService.instance.registerModuleConfig(
     ModuleConfig(moduleID: "ExampleModuleID2", moduleName: "Example Module2")
       ..addModuleConfigItems(
         [

@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: jwtComponent-secret
-type: Opaque
-data:
-  privateKey: UkVQTEFDRV9USElT
-  publicKey: UkVQTEFDRV9USElT
-  

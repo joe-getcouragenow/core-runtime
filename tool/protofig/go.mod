@@ -1,4 +1,4 @@
-module github.com/getcouragenow/bootstrap/tool/protofig
+module github.com/getcouragenow/core-runtime/tool/protofig
 
 go 1.14
 

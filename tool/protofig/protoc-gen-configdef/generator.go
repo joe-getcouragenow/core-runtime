@@ -4,11 +4,12 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/getcouragenow/bootstrap/tool/protokit"
+	"regexp"
+
+	"github.com/getcouragenow/protokit"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/descriptorpb"
 	plugin "google.golang.org/protobuf/types/pluginpb"
-	"regexp"
 
 	"log"
 	"strings"

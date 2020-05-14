@@ -3,8 +3,11 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mod_settings/mod_settings.dart';
 import 'package:sys_core/sys_core.dart';
 
-void main() {
-  CoreSettings.instance.registerModuleConfig(
+void main() async {
+
+  await coreInit();
+
+  await CoreSettings.instance.registerModuleConfig(
     ModuleConfig(moduleID: "ExampleModuleID", moduleName: "Example Module")
       ..addModuleConfigItems(
         [
@@ -16,7 +19,7 @@ void main() {
       ),
   );
 
-  CoreSettings.instance.registerModuleConfig(
+  await CoreSettings.instance.registerModuleConfig(
     ModuleConfig(moduleID: "ExampleModuleID2", moduleName: "Example Module2")
       ..addModuleConfigItems(
         [

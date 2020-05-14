@@ -1,0 +1,86 @@
+name: Dummies
+on:
+  push:
+    branches: [ dummy ]
+jobs:
+  build:
+    name: Build Dummies
+    runs-on: ubuntu-latest
+    steps:
+      - name: setup env
+        shell: bash
+        run: |
+          echo "::set-env name=GOPATH::${{ github.workspace }}/go"
+          echo "::add-path::${{ github.workspace }}/go/bin"
+          mkdir -p ${{ github.workspace }}/go/{src,bin,pkg}
+
+      - name: Set up Go 1.14
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.14
+          id: go
+
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+
+      - name: build dummy
+        run: make build-dummy
+
+      - name: "publish action-artifact zip dummy v1"
+        uses: actions/upload-artifact@v1
+        with:
+          name: dummy-${{ github.sha }}-v1
+          path: outputs/dummy-${{ github.sha }}-v1
+
+      - name: "publish action-artifact zip dummy v2"
+        uses: actions/upload-artifact@v1
+        with:
+          name: dummy-${{ github.sha }}-v2
+          path: outputs/dummy-${{ github.sha }}-v2
+
+  release:
+    needs: [build]
+    name: Release Dummies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+
+      - name: Download artefacts dummy-v1 linux
+        uses: actions/download-artifact@v1
+        with:
+          name: dummy-${{ github.sha }}-v1
+
+      - name: Download artefacts dummy-v2 linux
+        uses: actions/download-artifact@v1
+        with:
+          name: dummy-${{ github.sha }}-v2
+
+      - name: zip
+        run: |
+          zip dummies-${{ github.sha }} \
+            dummy-${{ github.sha }}-v1/dummy-${{ github.sha }}-v1 \
+            dummy-${{ github.sha }}-v2/dummy-${{ github.sha }}-v2
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: true
+          prerelease: false
+          allowUpdates: true
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dummies-${{ github.sha }}.zip
+          asset_name: dummies-${{ github.sha }}.zip
+          asset_content_type: application/zip

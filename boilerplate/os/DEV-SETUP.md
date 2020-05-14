@@ -78,10 +78,10 @@ Its basically flutter and golang. If you already have these then your fine.
 
 Dont forget to put in the right env variables. !!
 
-For mac. https://github.com/getcouragenow/bootstrap/blob/master/os/mac/.bashrc#L15
+For mac. https://github.com/getcouragenow/core-runtime/blob/master/os/mac/.bashrc#L15
 For other OS's see folder for your OS.
 
 Then in Tools, you need hover and i18n.
-See: https://github.com/getcouragenow/bootstrap/tree/master/tool
+See: https://github.com/getcouragenow/core-runtime/tree/master/tool
 - run the make file for hover and i18n folders.
 

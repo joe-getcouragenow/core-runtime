@@ -160,7 +160,7 @@ lang-gen-go: ## lang-gen-go
 	@echo i18n flutter
 
 lang-dep:
-	go get -u github.com/getcouragenow/bootstrap/tool/i18n
+	go get -u github.com/getcouragenow/core-runtime/tool/i18n
 
 lang-gen-json: ## lang-gen-json
 	# generate full json files

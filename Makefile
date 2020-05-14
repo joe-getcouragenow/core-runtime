@@ -4,6 +4,7 @@
 # includes
 include ./boilerplate/core/help.mk
 include ./boilerplate/core/go.mk
+include ./boilerplate/core/gitr.mk
 
 CUR_GIT_URL = "https://github.com/winwisely268/core-runtime"
 

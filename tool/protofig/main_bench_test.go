@@ -2,9 +2,9 @@ package main_test
 
 import (
 	"encoding/json"
-	p "github.com/getcouragenow/bootstrap/tool/protofig"
-	"github.com/getcouragenow/bootstrap/tool/protofig/generated/go"
 	"testing"
+
+	p "github.com/getcouragenow/core-runtime/tool/protofig"
 )
 
 var testData = `

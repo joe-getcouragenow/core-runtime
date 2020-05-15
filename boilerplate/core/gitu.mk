@@ -30,17 +30,17 @@ gitu-print:
 
 ## Returns lib name
 gitu-getlibpath:
-	return $(GITU_LIB)
+	echo $(GITU_LIB)
 
 ## Returns destination file system path
 gitu-getfspath:
-	return $(GITU_REPO_OUT_FSPATH)
+	echo $(GITU_REPO_OUT_FSPATH)
 
 
 
 gitu-clone:
 	mkdir -p $(GITU_REPO_OUT_FSPATH)
-	cd $(GITU_REPO_OUT_FSPATH) && cd .. && rm -rf $(GITU_REPO_NAME) && git clone ssh://git@$(GITU_LIB).git
+	cd $(GITU_REPO_OUT_FSPATH) && cd .. && rm -rf $(GITU_REPO_NAME) && git clone https://git@$(GITU_LIB).git
 
 
 ## Clones a master

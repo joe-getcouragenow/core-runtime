@@ -1,0 +1,108 @@
+name: Build Tools
+on: push
+jobs:
+  build:
+    name: Build Tools
+    runs-on: ubuntu-latest
+    steps:
+      - name: setup env
+        shell: bash
+        run: |
+          echo "::set-env name=GOPATH::${{ github.workspace }}/go"
+          echo "::add-path::${{ github.workspace }}/go/bin"
+          echo "::add-path::$HOME/.pub-cache/bin"
+          mkdir -p ${{ github.workspace }}/go/{src,bin,pkg}
+
+      - name: Set up Go 1.14
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.14
+          id: go
+
+      - name: Install Protobuf
+        run:  |
+          sudo apt update && sudo apt install -y protobuf-compiler libprotobuf-dev
+
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '8.x'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          channel: 'beta'
+
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+
+      - name: build tools
+        run:  |
+          pub global activate protoc_plugin
+          go get -u -v google.golang.org/protobuf/cmd/protoc-gen-go
+          which protoc-gen-go
+          make this-tools-build
+
+      - name: "publish action-artifact protoc-gen-configdef"
+        uses: actions/upload-artifact@v1
+        with:
+          name: protoc-gen-configdef
+          path: ${{ github.workspace }}/go/bin/protoc-gen-configdef
+
+      - name: "publish action-artifact bs-dummy"
+        uses: actions/upload-artifact@v1
+        with:
+          name: bs-dummy
+          path: ${{ github.workspace }}/go/bin/bs-dummy
+
+      - name: "publish action-artifact protofig"
+        uses: actions/upload-artifact@v1
+        with:
+          name: protofig
+          path: ${{ github.workspace }}/go/bin/protofig
+
+  release:
+    needs: [build]
+    name: Release Dummies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+
+      - name: Download artefacts dummy linux
+        uses: actions/download-artifact@v1
+        with:
+          name: bs-dummy
+
+      - name: Download artefacts protofig linux
+        uses: actions/download-artifact@v1
+        with:
+          name: protoc-gen-configdef
+
+      - name: Download artefacts protoc-gen-configdef linux
+        uses: actions/download-artifact@v1
+        with:
+          name: protofig
+
+      - name: zip tools
+        run: |
+          zip bs-dummy.zip bs-dummy/bs-dummy
+          zip protofig.zip protofig/protofig
+          zip protoc-gen-configdef.zip protoc-gen-configdef/protoc-gen-configdef
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: true
+          prerelease: false
+
+      - name: Upload tools
+        uses: csexton/release-asset-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          pattern: "*.zip"
+

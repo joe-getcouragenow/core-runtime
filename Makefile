@@ -25,7 +25,8 @@ this-print:
 this-tools-build:
 	# reach into each ones make and build
 	cd tool/dummy && $(MAKE) this-build
-	cd tool/protofig && $(MAKE) this-build
+	cd tool/protofig/protoc-gen-configdef && $(MAKE) this-build
+	cd tool/protofig && $(MAKE) this-build-all
 
 
 ## Tags the tools via  git tag

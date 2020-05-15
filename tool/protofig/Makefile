@@ -20,13 +20,13 @@ GITU_REPO_TAG=????
 GITU_REPO_OUTROOT_FSPATH=$(GOPATH)/src
 
 
-
 # go build
 override GO_FSPATH:=${PWD}
 GO_BIN_NAME=protofig
 override GO_BUILD_OUT_FSPATH:=${GOPATH}/bin/${GO_BIN_NAME}
 
-SUFFIX ?= $(shell git config user.name)
+#SUFFIX ?= $(shell git config user.name)
+SUFFIX ?= winwisely
 
 # Print
 this-print:
@@ -34,15 +34,12 @@ this-print:
 
 	@echo GO_BUILD_OUT_FSPATH: ${GO_BUILD_OUT_FSPATH}
 
-	@echo git-getlibpath: ${MAKE} gitu-getlibpath
-	@echo git-getfspath: ${MAKE} gitu-getfspath
-
-	
-	
+	@echo git-getlibpath: ${MAKE} ${GITU_LIB}
+	@echo git-getfspath: ${MAKE} ${GITU_REPO_OUT_FSPATH}
 
 # called by CI..
 ## build all.
-this-buildall: this-dep this-proto-gen
+this-build-all: this-dep this-proto-gen
 
 	${MAKE} go-build
 
@@ -53,10 +50,12 @@ this-build: this-proto-gen
 ## Dep
 this-dep:
 	${MAKE} gitu-clone-master
+	cd ${GITU_REPO_OUT_FSPATH} && make build
+
 
 ## Dep clean
 this-dep-clean:
-	#rm -rf ${GITU_REPO_OUTROOT_FSPATH}
+	rm -rf ${GITU_REPO_OUT_FSPATH}
 
 
 ### GEN

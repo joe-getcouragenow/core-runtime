@@ -7,37 +7,59 @@ BOILERPLATE_FSPATH=./boilerplate
 
 include $(BOILERPLATE_FSPATH)/core/help.mk
 include $(BOILERPLATE_FSPATH)/core/gitr.mk
+include $(BOILERPLATE_FSPATH)/core/tool.mk
 include $(BOILERPLATE_FSPATH)/core/go.mk
 
-CUR_GIT_URL = "https://github.com/winwisely268/core-runtime"
-
-.PHONY: help
 
 ## Print all settings
 this-print:
-	$(MAKE) go-print
 
-### Tools
-# These make targets do the releases for us.
-# They can also be called by CI itself. When it gets a tag it will call the make this-tools-release
 
-## Builds all tools
-this-tools-build:
-	# reach into each ones make and build
-	cd tool/dummy && $(MAKE) this-build
-	cd tool/protofig && $(MAKE) this-build
+### BUILD Phase
 
+# CI and local call this
+## Build everything
+this-build:
+
+	@echo -- Root - BUILD: start --
+
+	cd ./tool && $(MAKE) this-build
+	cd ./sys-core && $(MAKE) this-build
+	cd ./mod-settings && $(MAKE) this-build
+	cd ./mod-account && $(MAKE) this-build
+
+	@echo -- Root - BUILD: finish --
+
+
+### TEST Phase
+
+# CI and local cal this
+## tets all tool and modules
+this-test:
+	@echo -- Root - BUILD: start --
+
+	cd ./tool && $(MAKE) this-test
+	cd ./sys-core && $(MAKE) this-test
+	cd ./mod-settings && $(MAKE) this-test
+	cd ./mod-account && $(MAKE) this-test
+
+	@echo -- Root - BUILD: finish --
+
+
+## TAGS AND GIT
 
 ## Tags the tools via  git tag
-this-tools-tag:
+this-tag:
 	# tag it
 	$(MAKE) gitr-release-tag
 
 # Releases a build
-this-tools-release: this-tools-build
+this-release: this-tools-build
 	# runs off a tag event or a specified tag
 	$(MAKE) gitr-release-push
 	
+
+
 ### Dummy
 
 ## build dummy

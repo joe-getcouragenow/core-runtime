@@ -8,6 +8,8 @@ import "validate/validate.proto";
 
 // Config is basically a map<k,v>
 // where k is always a string, and v is defined in the ConfigVal
+
+
 message Config {
     string key = 1;
     ConfigVal val = 2;

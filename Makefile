@@ -12,24 +12,21 @@ include $(BOILERPLATE_FSPATH)/core/tool.mk
 
 ## Print all settings
 this-print:
+	TODO
 
 
-<<<<<<< HEAD
+### BUILD Phase
 ## Builds all tools
 this-tools-build:
 	# reach into each ones make and build
 	cd tool/dummy && $(MAKE) this-build
 	cd tool/protofig/protoc-gen-configdef && $(MAKE) this-build
 	cd tool/protofig && $(MAKE) this-build-all
-=======
-### BUILD Phase
 
 # CI and local call this
 ## Build everything
 this-build:
-
 	@echo -- Root - BUILD: start --
-
 	cd ./tool && $(MAKE) this-build
 	cd ./sys-core && $(MAKE) this-build
 	cd ./mod-settings && $(MAKE) this-build
@@ -37,9 +34,16 @@ this-build:
 
 	@echo -- Root - BUILD: finish --
 
+this-tools-docker-build:
+	docker build -t bs-protofig:latest -f tool/protofig/Dockerfile .
+
+this-tools-docker-example:
+	docker run -v $(PWD):/hostvol \
+		--rm -it bs-protofig:latest /protofig/bs-protofig \
+		-f /hostvol/example/protofig/config.default-winwisely.json \
+		-u winwiselyexample -o /hostvol/example/protofig/output
 
 ### TEST Phase
->>>>>>> upstream/master
 
 # CI and local cal this
 ## tets all tool and modules

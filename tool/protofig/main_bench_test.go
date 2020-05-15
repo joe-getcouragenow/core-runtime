@@ -2,6 +2,9 @@ package main_test
 
 import (
 	"encoding/json"
+	config "github.com/getcouragenow/core-runtime/tool/protofig/generated/go"
+	"os"
+	"path/filepath"
 	"testing"
 
 	p "github.com/getcouragenow/core-runtime/tool/protofig"
@@ -22,7 +25,7 @@ var testData = `
       "config": {
         "minioAccesskey": "REPLACE_THIS",
         "minioEnckey": "this is of type bytes",
-        "minioEndpoint": "http://127.0.0.1",
+        "minioEndpoint": "127.0.0.1",
         "minioLocation": "REPLACE_THIS",
         "minioSecretkey": "REPLACE_THIS",
         "minioSsl": false,
@@ -54,7 +57,7 @@ var testData = `
         "githubSha": "REPLACE_THIS",
         "locales": "[REPLACE_THIS, REPLACE_THIS]",
         "project": "REPLACE_THIS",
-        "registryHostname": "http://127.0.0.1",
+        "registryHostname": "127.0.0.1",
         "releaseChannel": "REPLACE_THIS",
         "url": "REPLACE_THIS"
       }
@@ -68,10 +71,23 @@ func BenchmarkCreateOutputs(b *testing.B) {
 	if err := json.Unmarshal([]byte(testData), &newAppConfig); err != nil {
 		b.Fatalf("Error: unable to marshal to json: %v", err)
 	}
-	output := p.NewOutputStruct(&newAppConfig, "./output", "alex")
+	path, err := os.Getwd()
+	if err != nil {
+		b.Fatalf("Error: unable to get current dir")
+	}
+	outDir := filepath.Join(path, "output")
+	output := p.NewOutputStruct(&newAppConfig, outDir, "alex")
+	if _, err = os.Stat(outDir); err != nil {
+		err = os.Mkdir(outDir, 0755)
+		if err != nil {
+			b.Fatalf("Error: unable to create directory: %v", err)
+		}
+	}
 	for i := 0; i < b.N; i++ {
-		if err := p.CreateOutputs(output); err != nil {
+		if err = p.CreateOutputs(output); err != nil {
 			b.Fatalf("Error: unable to create outputs: %v", err)
 		}
 	}
+	b.Logf("Successfully run bench test")
+	os.Remove(outDir)
 }

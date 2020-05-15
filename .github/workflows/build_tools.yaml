@@ -40,7 +40,6 @@ jobs:
         run:  |
           pub global activate protoc_plugin
           go get -u -v google.golang.org/protobuf/cmd/protoc-gen-go
-          which protoc-gen-go
           make this-tools-build
 
       - name: "publish action-artifact protoc-gen-configdef"
@@ -58,12 +57,12 @@ jobs:
       - name: "publish action-artifact protofig"
         uses: actions/upload-artifact@v1
         with:
-          name: protofig
-          path: ${{ github.workspace }}/go/bin/protofig
+          name: bs-protofig
+          path: ${{ github.workspace }}/go/bin/bs-protofig
 
   release:
     needs: [build]
-    name: Release Dummies
+    name: Release Tools
     runs-on: ubuntu-latest
     steps:
       - name: Check out code into the Go module directory
@@ -82,15 +81,17 @@ jobs:
       - name: Download artefacts protoc-gen-configdef linux
         uses: actions/download-artifact@v1
         with:
-          name: protofig
+          name: bs-protofig
 
       - name: zip tools
         run: |
           zip bs-dummy.zip bs-dummy/bs-dummy
-          zip protofig.zip protofig/protofig
+          zip bs-protofig.zip bs-protofig/bs-protofig
           zip protoc-gen-configdef.zip protoc-gen-configdef/protoc-gen-configdef
+          ls -alh ${{ github.workspace }}
 
       - name: Create Release
+        id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -104,5 +105,6 @@ jobs:
         uses: csexton/release-asset-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          release-url: ${{ steps.create_release.outputs.upload_url }}
           pattern: "*.zip"
 

@@ -1,9 +1,18 @@
-include ../../boilerplate/tool/tools.mk
+# includes
+BOILERPLATE_FSPATH=../../boilerplate
 
-override LIB_BIN_NAME=protofig
+include $(BOILERPLATE_FSPATH)/tool/tools.mk
+include $(BOILERPLATE_FSPATH)/core/go.mk
+
+
+#override LIB_BIN_NAME=protofig
+override GO_FSPATH:=${GOPATH}/bin/protofig
 SUFFIX ?= $(shell git config user.name)
 
 PHONY: help
+
+this-build: proto
+	${MAKE} go-build
 
 baseproto:
 	protoc -I api/ \
@@ -21,10 +30,10 @@ settingsproto:
 		--go_out=":generated/go" \
 		--dart_out=":generated/dart" \
 		--validate_out="lang=go:generated/go/" \
-		api/settings.proto	
+		api/settings.proto
 
 ## Generate protobuf golang & dart code
-proto: baseproto
+proto: clean-proto baseproto
 	$(MAKE) settingsproto
 	protoc -I api/ \
 		-I ${GOPATH}/src \
@@ -36,6 +45,11 @@ proto: baseproto
 		--configdef_out=output_format=dart,suffix=$(SUFFIX):"generated/dart" \
 		--configdef_out=output_format=json,suffix=$(SUFFIX):"generated/" \
 		api/config.proto
+
+clean-proto:
+	rm -rf generated/go/*
+	rm -rf generated/dart/*
+	rm -rf generated/*.json
 
 ## Test protofig output in output directory using supplied test.json
 test-json:

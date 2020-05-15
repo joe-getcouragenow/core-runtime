@@ -55,4 +55,3 @@ build: ## build
 ## Clean generated binary
 build-clean: ## build-clean
 	rm $(LIB_BIN_FSPATH)
-

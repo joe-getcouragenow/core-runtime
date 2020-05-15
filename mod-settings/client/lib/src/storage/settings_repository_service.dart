@@ -1,7 +1,7 @@
-import 'package:sys_core/src/api/baseproto.pb.dart';
-import 'package:sys_core/src/api/settings.pb.dart';
-import 'package:sys_core/src/storage/settings_repository.dart';
 import 'package:fixnum/fixnum.dart';
+import 'package:mod_settings/src/api/baseproto.pb.dart';
+import 'package:mod_settings/src/api/settings.pb.dart';
+import 'package:mod_settings/src/storage/settings_repository.dart';
 
 class SettingsRepositoryService {
   ModuleSettingsRepository _moduleSettingsRepository =

@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:sys_core/src/api/settings.pb.dart';
+import 'package:mod_settings/src/api/settings.pb.dart';
 
 abstract class ModuleSettingsRepository {
   Future<ProtoModuleConfig> getModuleConfig(String moduleID);

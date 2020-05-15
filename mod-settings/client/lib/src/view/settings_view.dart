@@ -2,17 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:sys_core/sys_core.dart';
 
 class SettingsViewNew extends StatefulWidget {
+  final CoreSettingsService coreSettings;
+
+  const SettingsViewNew({Key key, @required this.coreSettings})
+      : assert(coreSettings != null),
+        super(key: key);
+
   @override
   _SettingsViewNewState createState() => _SettingsViewNewState();
 }
 
 class _SettingsViewNewState extends State<SettingsViewNew> {
-  CoreSettingsService _coreSettings = CoreSettingsService.instance;
+  CoreSettingsService _coreSettings;
 
   @override
   void initState() {
     super.initState();
-    _coreSettings.addListener(_updateUI);
+    print("widget.coresettings: ${widget.coreSettings}");
+    _coreSettings = widget.coreSettings;
+
+    if (_coreSettings != null) {
+      _coreSettings.addListener(_updateUI);
+    } else {
+      print("CoreSettingsSerive is null!");
+    }
   }
 
   @override
@@ -22,15 +35,16 @@ class _SettingsViewNewState extends State<SettingsViewNew> {
   }
 
   _updateUI() {
-    print("_updateUI");
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     if (_coreSettings.moduleConfigs.isEmpty)
-      return Center(
-        child: Text("No settings found"),
+      return Scaffold(
+        body: Center(
+          child: Text("No settings found"),
+        ),
       );
 
     var moduleSettings = _coreSettings.moduleConfigs.first;

@@ -8,27 +8,28 @@ include $(BOILERPLATE_FSPATH)/core/go.mk
 
 # go build
 override GO_FSPATH:=${PWD}
-
-override GO_BUILD_OUT_FSPATH:=${TOOL_DUMMY_BIN_FSPATH}
+override GO_BUILD_OUT_FSPATH:=${TOOL_PROTODB_BIN_FSPATH}
+GO_BUILD_OUT_BIN_NAME:= ${TOOL_PROTODB_BIN_NAME}
 
 # Print
 this-print:
 	@echo
 	@echo -- TOOL DUMMY --
 	@echo GO_BUILD_OUT_FSPATH: ${GO_BUILD_OUT_FSPATH}
-	@echo TOOL_DUMMY_BIN_NAME ${TOOL_DUMMY_BIN_NAME}
+	@echo GO_BUILD_OUT_BIN_NAME ${GO_BUILD_OUT_BIN_NAME}
 	@echo
 
 ## Build
 this-build: this-build-clean
-	$(MAKE) go-build 
-	which ${TOOL_DUMMY_BIN_NAME}
+	## WW99: BROKEN and will fix once other fires out...
+	#$(MAKE) go-build 
+	#which ${GO_BUILD_OUT_BIN_NAME}
 
 this-build-clean:
-	rm -rf ${TOOL_DUMMY_BIN_NAME}
+	rm -rf ${GO_BUILD_OUT_BIN_NAME}
 
 this-test:
-	@echo TODO !
+	@echo TODO
 
 
 

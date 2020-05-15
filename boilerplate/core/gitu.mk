@@ -28,6 +28,15 @@ gitu-print:
 	@echo GITU_REPO_OUT_FSPATH: 	$(GITU_REPO_OUT_FSPATH)
 	
 
+## Returns lib name
+gitu-getlibpath:
+	return $(GITU_LIB)
+
+## Returns destination file system path
+gitu-getfspath:
+	return $(GITU_REPO_OUT_FSPATH)
+
+
 
 gitu-clone:
 	mkdir -p $(GITU_REPO_OUT_FSPATH)
@@ -39,14 +48,14 @@ gitu-clone-master: gitu-clone
 	cd $(GITU_REPO_OUT_FSPATH) && git checkout $(GITU_REPO_BRANCH)
 
 	# return path
-	$(MAKE) gitu-getfspath
+	#$(MAKE) gitu-getfspath
 
 ## Clones a tag
 gitu-clone-tag: gitu-clone 
 	cd $(GITU_REPO_OUT_FSPATH) && git checkout tags/$(GITU_REPO_TAG)
 	
 	# return path
-	$(MAKE) gitu-getfspath
+	#$(MAKE) gitu-getfspath
 
 gitu-pull:
 	## not used but likely will be later...
@@ -56,9 +65,8 @@ gitu-pull:
 gitu-delete:
 	rm -rf $(GITU_REPO_OUT_FSPATH)
 
-## Returns destination file system path
-gitu-getfspath:
-	@echo $(GITU_REPO_OUT_FSPATH)
+
+
 
 
 

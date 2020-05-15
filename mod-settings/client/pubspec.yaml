@@ -13,6 +13,7 @@ dependencies:
   sys_core:
     path: ../../sys-core/client
   flutter_modular: ^1.1.2
+  hive: ^1.4.1+1
 
 dev_dependencies:
   flutter_test:

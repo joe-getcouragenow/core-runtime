@@ -1,24 +1,13 @@
 
 import 'package:flutter/foundation.dart';
-import 'package:sys_core/src/settings/modules/module_config_item.dart';
+import 'package:sys_core/src/settings/core_settings.dart';
 
 /// [ModuleConfig] is the base class for every module which needs to expose
 /// it's settings to the settings gui. This module can be used for any DI
 /// solutions and be consumed by a Consumer class as there are in
 /// flutter_modular or provider as it's also a ChangeNotifier class.
 ///
-/// A possible implementation could look like:
-///
-///     class MainModuleConfig extends ModuleConfigs {
-///       @override
-///       String moduleID = "MainModule";
-///
-///       MainModuleConfig() : super() {
-///         this.setString("key", "value");
-///         this.setInt("counter", 0, "description");
-///       }
-///     }
-///
+
 class ModuleConfig extends ChangeNotifier {
   String moduleID;
   String moduleName;
@@ -26,11 +15,9 @@ class ModuleConfig extends ChangeNotifier {
 
   List<ModuleConfigItem> get configItems => _configItems.values.toList();
 
-  ModuleConfig({@required this.moduleID, @required this.moduleName})
+  ModuleConfig({@required this.moduleID, @required this.moduleName, @required List<ModuleConfigItem> items})
       : assert(moduleID != null),
-        assert(moduleName != null);
-
-  addModuleConfigItems(List<ModuleConfigItem> items) {
+        assert(moduleName != null){
     items.forEach((item) {
       if (_configItems[item.key] != null) {
         print(
@@ -84,7 +71,6 @@ class ModuleConfig extends ChangeNotifier {
     _configItems[key] =
         (item as ModuleConfigItemDropdown).copyWith(value: value);
     notifyListeners();
-    print("dropdownvalueset: $value");
   }
 
   setBoolValue(String key, bool value) {

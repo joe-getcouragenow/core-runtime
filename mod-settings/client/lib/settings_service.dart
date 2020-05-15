@@ -1,15 +1,12 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:sys_core/src/settings/modules/module_config.dart';
-import 'package:sys_core/src/settings/modules/module_config_item.dart';
-import 'package:sys_core/src/storage/settings_repository_service.dart';
+import 'package:mod_settings/src/storage/settings_repository_service.dart';
+import 'package:sys_core/sys_core.dart';
 
-class CoreSettingsService extends ChangeNotifier {
-  static final CoreSettingsService _instance = CoreSettingsService._internal();
+class SettingsService extends CoreSettingsService {
+  static final SettingsService _instance = SettingsService._internal();
 
   static CoreSettingsService get instance => _instance;
 
-  CoreSettingsService._internal();
+  SettingsService._internal();
 
   /// this map contains all [ModuleConfig] classes from all submodules
   /// which have registered their settings here
@@ -21,6 +18,7 @@ class CoreSettingsService extends ChangeNotifier {
 
   /// each module which want's to expose its settings have to register
   /// its [ModuleConfig] here
+  @override
   registerModuleConfig(ModuleConfig configs) async {
     print("ModuleConfig registered : ${configs.moduleID}, $configs}");
     _moduleConfigs[configs.moduleID] = configs;
@@ -39,14 +37,14 @@ class CoreSettingsService extends ChangeNotifier {
 
     //adding listener to save new changes
     configs.addListener(() {
-      onModuleChange(configs.moduleID);
+      _onModuleChange(configs.moduleID);
     });
   }
 
   /// this function fires if any config from any submodule has changed
-  onModuleChange(String moduleID) {
+  _onModuleChange(String moduleID) {
     // this module has changed so save it to repository
-    print("onModuleChange -> moduleID: $moduleID");
+    //print("onModuleChange -> moduleID: $moduleID");
     _moduleConfigs[moduleID].configItems.forEach((item) {
       if (item is ModuleConfigItemBool) {
         _settingsService.setBool(moduleID, item.key, item.value);

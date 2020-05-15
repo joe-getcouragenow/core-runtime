@@ -1,9 +1,18 @@
-include ../../boilerplate/tool/tools.mk
+# includes
+BOILERPLATE_FSPATH=../../boilerplate
 
-override LIB_BIN_NAME=protofig
+include $(BOILERPLATE_FSPATH)/tool/tools.mk
+include $(BOILERPLATE_FSPATH)/core/go.mk
+
+
+#override LIB_BIN_NAME=protofig
+override GO_FSPATH:=${GOPATH}/bin/protofig
 SUFFIX ?= $(shell git config user.name)
 
 PHONY: help
+
+this-build:
+	${MAKE} go-build
 
 baseproto:
 	protoc -I api/ \

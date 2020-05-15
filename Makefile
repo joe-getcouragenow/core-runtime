@@ -1,10 +1,13 @@
 # This make file uses composition to keep things KISS and easy.
 # In the boilerpalte make files dont do any includes, because you will create multi permutations of possibilities.
 
+
 # includes
-include ./boilerplate/core/help.mk
-include ./boilerplate/core/go.mk
-include ./boilerplate/core/gitr.mk
+BOILERPLATE_FSPATH=./boilerplate
+
+include $(BOILERPLATE_FSPATH)/core/help.mk
+include $(BOILERPLATE_FSPATH)/core/gitr.mk
+include $(BOILERPLATE_FSPATH)/core/go.mk
 
 CUR_GIT_URL = "https://github.com/winwisely268/core-runtime"
 
@@ -20,18 +23,20 @@ this-print:
 
 ## Builds all tools
 this-tools-build:
-	# reach into eac ones make and build
+	# reach into each ones make and build
 	cd tool/dummy && $(MAKE) this-build
+	cd tool/protofig && $(MAKE) this-build
+
 
 ## Tags the tools via  git tag
 this-tools-tag:
 	# tag it
-	$(MAKE)  gitr-release-tag
+	$(MAKE) gitr-release-tag
 
 # Releases a build
 this-tools-release: this-tools-build
 	# runs off a tag event or a specified tag
-	$(MAKE)  gitr-release-push
+	$(MAKE) gitr-release-push
 	
 ### Dummy
 

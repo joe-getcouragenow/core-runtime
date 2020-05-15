@@ -8,7 +8,6 @@ BOILERPLATE_FSPATH=./boilerplate
 include $(BOILERPLATE_FSPATH)/core/help.mk
 include $(BOILERPLATE_FSPATH)/core/gitr.mk
 include $(BOILERPLATE_FSPATH)/core/tool.mk
-include $(BOILERPLATE_FSPATH)/core/go.mk
 
 
 ## Print all settings
@@ -61,6 +60,8 @@ this-release: this-tools-build
 
 
 ### Dummy
+
+# TODO get this inthe right place !!
 
 ## build dummy
 build-dummy:

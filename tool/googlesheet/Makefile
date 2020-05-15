@@ -38,29 +38,6 @@ dep:
 test:
 	go test -v ./...
 
-	
-### cloud
-
-cloud-auth:
-	gcloud auth login
-	gcloud config set project $(CLOUD_PROJECT_ID)
-
-	gcloud config set run/region europe-west1
-cloud-open:
-	# run
-	open https://console.cloud.google.com/run?project=$(CLOUD_PROJECT_ID)
-	# container
-	open https://console.cloud.google.com/cloud-build/builds?project=$(CLOUD_PROJECT_ID)
-	# store
-	open https://console.cloud.google.com/storage/browser?project=$(CLOUD_PROJECT_ID)
-cloud-build:
-	echo $(CLOUD_PROJECT_ID)
-	gcloud builds submit --tag gcr.io/$(CLOUD_PROJECT_ID)/identicon-generator
-cloud-deploy:
-	gcloud beta run deploy --image gcr.io/$(CLOUD_PROJECT_ID)/identicon-generator --platform managed
-
-
-
 gsheet-open: ## gsheet-open
 	open $(GOOGLE_SHEET_URL)
 	open $(GOOGLE_SHEET_CSV)
@@ -71,11 +48,6 @@ build: ## build ****
 	which $(LIB_BIN_FSPATH)
 
 build-clean:
-	# go stuff
-	go clean -cache
-	go clean -modcache
-	go clean -testcache
-
 	# binary in the GO BIN path
 	rm $(LIB_BIN_FSPATH)
 

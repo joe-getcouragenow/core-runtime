@@ -2,18 +2,18 @@
 BOILERPLATE_FSPATH=../../boilerplate
 
 include $(BOILERPLATE_FSPATH)/core/help.mk
+include $(BOILERPLATE_FSPATH)/core/tool.mk
 include $(BOILERPLATE_FSPATH)/core/gitu.mk
 include $(BOILERPLATE_FSPATH)/core/go.mk
 
 # externals
 
 # envoy
-#EXT_LIB_ENVOY:= github.com/getcouragenow/protoc-gen-validate
-EXT_LIB_ENVOY:= github.com/envoyproxy/protoc-gen-validate
+EXT_LIB_ENVOY:= github.com/getcouragenow/protoc-gen-validate
 
 GITU_REPO_SERVER=github.com
-#GITU_REPO_ORG=getcouragenow
-GITU_REPO_ORG=envoyproxy
+GITU_REPO_ORG=getcouragenow
+#GITU_REPO_ORG=envoyproxy
 GITU_REPO_NAME=protoc-gen-validate
 GITU_REPO_BRANCH=master
 GITU_REPO_TAG=????
@@ -22,8 +22,7 @@ GITU_REPO_OUTROOT_FSPATH=$(GOPATH)/src
 
 # go build
 override GO_FSPATH:=${PWD}
-GO_BIN_NAME=protofig
-override GO_BUILD_OUT_FSPATH:=${GOPATH}/bin/${GO_BIN_NAME}
+override GO_BUILD_OUT_FSPATH:=${TOOL_PROTOFIG_BIN_FSPATH}
 
 #SUFFIX ?= $(shell git config user.name)
 SUFFIX ?= winwisely
@@ -32,20 +31,18 @@ SUFFIX ?= winwisely
 this-print:
 	@echo EXT_LIB_ENVOY: ${EXT_LIB_ENVOY}
 
+	@echo GO_BIN_NAME: ${GO_BUILD_OUT_FSPATH}
 	@echo GO_BUILD_OUT_FSPATH: ${GO_BUILD_OUT_FSPATH}
-
-	@echo git-getlibpath: ${MAKE} ${GITU_LIB}
-	@echo git-getfspath: ${MAKE} ${GITU_REPO_OUT_FSPATH}
 
 # called by CI..
 ## build all.
 this-build-all: this-dep this-proto-gen
+	@echo TOOL_PROTOFIG_BIN_NAME: ${TOOL_PROTOFIG_BIN_NAME}
 
-	${MAKE} go-build
-
-## build
+## Build
 this-build: this-proto-gen
 	${MAKE} go-build
+	which ${TOOL_DUMMY_BIN_NAME}
 
 ## Dep
 this-dep:
@@ -57,9 +54,12 @@ this-dep:
 this-dep-clean:
 	rm -rf ${GITU_REPO_OUT_FSPATH}
 
+## Tests
+this-test:
+	@echo TODO !!
+
 
 ### GEN
-
 ## Generate protobuf golang & dart code
 this-proto-gen: this-proto-clean this-gen-bs this-baseproto-gen
 	$(MAKE) this-settingsproto
@@ -106,7 +106,6 @@ this-settingsproto:
 		--dart_out=":generated/dart" \
 		--validate_out="lang=go:generated/go/" \
 		api/settings.proto
-
 
 
 ## Test protofig output in output directory using supplied test.json

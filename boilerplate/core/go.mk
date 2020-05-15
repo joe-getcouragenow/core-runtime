@@ -7,7 +7,7 @@ GO_FSPATH == ???
 # Path to build binary to.
 GO_BUILD_OUT_FSPATH = ???
 
-# Packages to operate one
+# Packages to operate on
 GO_PKG_LIST = ???
 
 ## Print
@@ -31,6 +31,13 @@ go-boilerplate-update:
 go-build:
 	@echo Building
 	cd $(GO_FSPATH) && go build -v -o $(GO_BUILD_OUT_FSPATH) .
+
+## Clean goalng OS caches
+go-os-clean:
+	# go stuff
+	go clean -cache
+	go clean -modcache
+	go clean -testcache
 
 ## Run the code
 go-run:

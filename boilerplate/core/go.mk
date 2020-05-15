@@ -32,6 +32,13 @@ go-build:
 	@echo Building
 	cd $(GO_FSPATH) && go build -v -o $(GO_BUILD_OUT_FSPATH) .
 
+## Clean goalng OS caches
+go-os-clean:
+	# go stuff
+	go clean -cache
+	go clean -modcache
+	go clean -testcache
+
 ## Run the code
 go-run:
 	@echo Running

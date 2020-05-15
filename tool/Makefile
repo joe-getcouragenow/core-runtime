@@ -23,6 +23,7 @@ this-build:
 	@echo -- TOOLS - BUILD ALL: start --
 
 	cd ./dummy && $(MAKE) this-build
+	cd ./lang && $(MAKE) this-build
 	cd ./protofig && $(MAKE) this-build
 	# -- PLUS ALL OTHER TOOLS !!
 
@@ -35,6 +36,7 @@ this-test:
 	@echo -- TOOLS - TEST ALL: start --
 
 	#cd ./dummy && $(MAKE) this-test
+	#cd ./lang && $(MAKE) this-test
 	#cd ./protofig && $(MAKE) this-test
 	# -- PLUS ALL OTHER TOOLS !!
 

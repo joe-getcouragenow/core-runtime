@@ -13,18 +13,19 @@ override GO_BUILD_OUT_FSPATH:=${TOOL_DUMMY_BIN_FSPATH}
 
 # Print
 this-print:
+	@echo
 	@echo -- TOOL DUMMY --
-	@echo EXT_LIB_ENVOY: ${EXT_LIB_ENVOY}
-
-	@echo GO_BIN_NAME: ${GO_BUILD_OUT_FSPATH}
 	@echo GO_BUILD_OUT_FSPATH: ${GO_BUILD_OUT_FSPATH}
-
 	@echo TOOL_DUMMY_BIN_NAME ${TOOL_DUMMY_BIN_NAME}
+	@echo
 
 ## Build
-this-build:
+this-build: this-build-clean
 	$(MAKE) go-build 
 	which ${TOOL_DUMMY_BIN_NAME}
+
+this-build-clean:
+	rm -rf ${TOOL_DUMMY_BIN_NAME}
 
 
 

@@ -7,7 +7,7 @@ GO_FSPATH == ???
 # Path to build binary to.
 GO_BUILD_OUT_FSPATH = ???
 
-# Packages to operate one
+# Packages to operate on
 GO_PKG_LIST = ???
 
 ## Print

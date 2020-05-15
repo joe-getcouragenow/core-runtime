@@ -21,8 +21,6 @@ GITR_REPO_ABS_FSPATH=$(GOPATH)/src/$(GITR_SERVER)/$(GITR_ORG_FORK)/$(GITR_REPO_N
 GITR_VERSION ?= $(shell echo $(TAGGED_VERSION) | cut -c 2-)
 
 
-
-
 ## Prints the git setting
 gitr-print:
 	@echo

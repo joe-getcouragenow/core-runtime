@@ -1,6 +1,8 @@
-# git include
-include ../boilerplate/core/help.mk
-include ../boilerplate/core/os.mk
+# includes
+BOILERPLATE_FSPATH=./../boilerplate
+
+include $(BOILERPLATE_FSPATH)/core/help.mk
+include $(BOILERPLATE_FSPATH)/core/os.mk
 
 ## Generate protobuf golang & dart code
 flu-proto-gen: 

@@ -22,9 +22,17 @@ this-build:
 
 	@echo -- TOOLS - BUILD ALL: start --
 
+	@echo Dummy
 	cd ./dummy && $(MAKE) this-build
+
+	@echo Lang
 	cd ./lang && $(MAKE) this-build
+
+	@echo Protofig
 	cd ./protofig && $(MAKE) this-build
+
+	@echo Protodb
+	cd ./protodb && $(MAKE) this-build
 	# -- PLUS ALL OTHER TOOLS !!
 
 	@echo -- TOOLS - BUILD ALL: finish --
@@ -35,9 +43,17 @@ this-build:
 this-test:
 	@echo -- TOOLS - TEST ALL: start --
 
-	#cd ./dummy && $(MAKE) this-test
-	#cd ./lang && $(MAKE) this-test
-	#cd ./protofig && $(MAKE) this-test
+	@echo Dummy
+	cd ./dummy && $(MAKE) this-test
+
+	@echo Lang
+	cd ./lang && $(MAKE) this-test
+
+	@echo Protofig
+	cd ./protofig && $(MAKE) this-test
+
+	@echo Protodb
+	cd ./protodb && $(MAKE) this-test
 	# -- PLUS ALL OTHER TOOLS !!
 
 	@echo -- TOOLS - TEST ALL: finish --

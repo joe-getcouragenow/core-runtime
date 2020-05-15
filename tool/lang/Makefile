@@ -31,6 +31,8 @@ this-build-clean:
 this-test:
 	go test -v ./...
 
+	@echo TODO - call flutter tests !!
+
 # lang tool usage. TODO
 # 1. make this-build ==> build lang tool
 # 2. make lang-full-json-flutter ==> generate translated json files

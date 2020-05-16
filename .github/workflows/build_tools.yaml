@@ -2,7 +2,7 @@ name: Build Tools
 on:
   push:
     tags:
-      - '*'
+      - "*"
 jobs:
   build:
     name: Build Tools
@@ -15,18 +15,18 @@ jobs:
           id: go
 
       - name: Install Protobuf
-        run:  |
+        run: |
           sudo apt update && sudo apt install -y protobuf-compiler libprotobuf-dev
 
       - name: Setup Java
         uses: actions/setup-java@v1
         with:
-          java-version: '8.x'
+          java-version: "8.x"
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v1
         with:
-          channel: 'beta'
+          channel: "beta"
 
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
@@ -40,13 +40,42 @@ jobs:
           mkdir -p "${{ github.workspace }}"/go/{src,bin,pkg}
 
       - name: Build Tools for all (supported) platforms
-        run:  |
+        run: |
           make this-flu-activate-plugin
           make this-tools-build-all
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: all-binaries
+          path: ${{ github.workspace }}/tool/assets/*.gz
+
+  release:
+    needs: [build]
+    name: Release Tools
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
 
       - name: Get the current git tag
         id: get_current_git_tag
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
+      - name: Create assets directory
+        run: |
+          mkdir -p assets
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: all-binaries
+          path: assets
+
+      - name: Display artifacts
+        run: |
+          ls -R
+        working-directory: assets/
 
       - name: Create Release
         id: create_release
@@ -58,11 +87,10 @@ jobs:
           release_name: Release ${{ steps.get_current_git_tag.outputs.VERSION }}
           draft: true
           prerelease: false
-          
+
       - name: Upload tools
         uses: csexton/release-asset-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           release-url: ${{ steps.create_release.outputs.upload_url }}
-          pattern: "tool/assets/*.zip"
-
+          pattern: "assets/*.gz"

@@ -9,6 +9,7 @@ GITR_ORG_UPSTREAM ?= getcouragenow
 GITR_ORG_FORK=$(shell basename $(dir $(abspath $(dir $$PWD))))
 GITR_USER=$(GITR_ORG_FORK)
 GITR_REPO_NAME=$(notdir $(shell pwd))
+GITR_LAST_TAG=$(shell git describe --exact-match --tags $(shell git rev-parse HEAD))
 
 # calculated
 # upstream
@@ -40,6 +41,7 @@ gitr-print:
 
 	@echo ---
 	@echo GITR_VERSION: 				$(GITR_VERSION)
+	@echo GITR_LAST_TAG:				$(GITR_LAST_TAG)
 	
 	@echo
 
@@ -94,7 +96,7 @@ gitr-tag-delete:
 ## GIT-RELEASE
 
 ## Stage a release (usage: make release-tag VERSION={VERSION_TAG})
-gitr-release-tag: go-build go-fmt go-lint go-test
+gitr-release-tag:
 	@echo Tagging release with version "${VERSION}"
 	@git tag -a ${VERSION} -m "chore: release version '${VERSION}'"
 	@echo Generating changelog

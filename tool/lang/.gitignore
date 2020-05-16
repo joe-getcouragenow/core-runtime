@@ -11,3 +11,4 @@ outputs
 static/
 .idea/*
 vendor/
+builds/

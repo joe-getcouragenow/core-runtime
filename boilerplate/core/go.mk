@@ -13,6 +13,41 @@ GO_PKG_LIST = ???
 # Array of external Golang Dependencies
 GO_EXT_DEPS = ???
 
+# Platforms / OS that is supported
+GO_SUPPORTED_PLATFORMS=darwin windows linux
+
+# Supported Architectures
+GO_SUPPORTED_ARCHS=386 amd64 arm arm64
+
+# Go cross-compile all output directory
+GO_BUILD_OUT_ALL_FSPATH = ???
+
+# Go binary name (TODO this is already defined in boilerplate/core/tool.mk)
+GO_BIN_NAME = ???
+
+# Install external dependencies function
+define GO_INSTALL_DEPS_FUNC
+	$(if $(findstring "protoc-gen-validate",$(1)), \
+		$(shell GO111MODULE=off go get -u -v $(1)), \
+		$(shell GO111MODULE=off go get -d $(1) && GO111MODULE=off go get -u -v $(1)))
+endef
+
+# Uninstall external dependencies function
+define GO_UNINSTALL_DEPS_FUNC
+	$(shell export GO111MODULE=off; go clean -i $(DEPS))
+endef
+
+define BUILD_BIN_FUNC
+	$(foreach GOARCH, $(2),$(shell export GOOS=$(1); export GOARCH=$(GOARCH); \
+		go build -v -o $(GO_BUILD_OUT_ALL_FSPATH)/$(GO_BIN_NAME)-$(GOOS)-$(GOARCH) $(GO_FSPATH)))
+endef
+
+# Build for all supported platforms and architectures
+define GO_BUILD_ALL_FUNC
+	$(if $(findstring linux,$(1)),$(call BUILD_BIN_FUNC,$(1),$(GO_SUPPORTED_ARCHS)), \
+		$(call BUILD_BIN_FUNC,$(1),$(wordlist 1,2,$(GO_SUPPORTED_ARCHS))))
+endef
+
 ## Print
 go-print: 
 	@echo
@@ -20,6 +55,11 @@ go-print:
 	@echo GO_FSPATH: 				$(GO_FSPATH)
 	@echo GO_PKG_LIST: 				$(GO_PKG_LIST)
 	@echo GO_BUILD_OUT_FSPATH: 		$(GO_BUILD_OUT_FSPATH)
+	@echo GO_EXT_DEPS:              $(GO_EXT_DEPS)
+	@echo GO_SUPPORTED_PLATFORMS:   $(GO_SUPPORTED_PLATFORMS)
+	@echo GO_SUPPORTED_ARCHS:		$(GO_SUPPORTED_ARCHS)
+	@echo GO_BUILD_OUT_ALL_FSPATH:	$(GO_BUILD_OUT_ALL_FSPATH)
+
 	@echo
 
 
@@ -34,6 +74,17 @@ go-boilerplate-update:
 go-build:
 	@echo Building
 	cd $(GO_FSPATH) && go build -v -o $(GO_BUILD_OUT_FSPATH) .
+
+go-build-all:
+	@echo "Building for all supported archs and platforms"
+	mkdir -p $(GO_BUILD_OUT_ALL_FSPATH)
+	cd $(GO_FSPATH)
+	$(foreach GOOS, $(GO_SUPPORTED_PLATFORMS),\
+		$(call GO_BUILD_ALL_FUNC,$(GOOS)))
+
+go-build-clean-all:
+	@echo "Removing builds for all supported archs and platforms"
+	rm -rf $(GO_BUILD_OUT_ALL_FSPATH)
 
 ## Clean goalng OS caches
 go-os-clean:
@@ -75,11 +126,8 @@ go-display-coverage:
 ## Get external dependencies
 go-exts-get:
 	$(foreach DEPS, $(GO_EXT_DEPS), \
-		GO111MODULE=off go get -d $(DEPS) && GO111MODULE=off go get -u -v $(DEPS))
+		$(call GO_INSTALL_DEPS_FUNC,$(DEPS)))
 
 ## Cleans external dependencies
 go-exts-clean:
-	$(foreach DEPS, $(GO_EXT_DEPS), \
-		rm -rf $(GOPATH)/src/$(DEPS) )
-	$(foreach DEPS, $(GO_EXT_DEPS), \
-		rm -rf $(GOPATH)/bin/$(notdir $(DEPS)))
+	$(foreach DEPS, $(GO_EXT_DEPS), $(call GO_UNINSTALL_DEPS_FUNC,$(DEPS)))

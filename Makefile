@@ -8,7 +8,20 @@ BOILERPLATE_FSPATH=./boilerplate
 include $(BOILERPLATE_FSPATH)/core/help.mk
 include $(BOILERPLATE_FSPATH)/core/gitr.mk
 include $(BOILERPLATE_FSPATH)/core/tool.mk
+include $(BOILERPLATE_FSPATH)/core/go.mk
 
+override GO_EXT_DEPS = github.com/git-chglog/git-chglog/cmd/git-chglog
+
+## OS Deps for CI
+# this-os-deps:
+	# TODO doesn't work
+	# echo "::set-env name=GOPATH::${{ github.workspace }}/go"
+	# echo "::add-path::${{ github.workspace }}/go/bin"
+	# echo "::add-path::$HOME/.pub-cache/bin"
+	# mkdir -p "${{ github.workspace }}"/go/{src,bin,pkg}
+
+this-flu-activate-plugin:
+	pub global activate protoc_plugin
 
 ## Print all settings
 this-print:
@@ -16,12 +29,18 @@ this-print:
 
 
 ### BUILD Phase
+
 ## Builds all tools
 this-tools-build:
 	# reach into each ones make and build
 	cd tool/dummy && $(MAKE) this-build
 	cd tool/protofig/protoc-gen-configdef && $(MAKE) this-build
-	cd tool/protofig && $(MAKE) this-build-all
+	cd tool/protofig && $(MAKE) this-build
+
+## Builds all tools for all platforms
+this-tools-build-all:
+	# go to tool and run Makefile from there
+	cd tool && ${MAKE} this-assets-release
 
 # CI and local call this
 ## Build everything
@@ -60,8 +79,9 @@ this-test:
 
 ## TAGS AND GIT
 
-## Tags the tools via  git tag
-this-tag:
+
+## Tags the tools via git, example: VERSION="YOUR_TAG" make this-tag
+this-tag: this-deps
 	# tag it
 	$(MAKE) gitr-release-tag
 
@@ -69,19 +89,16 @@ this-tag:
 this-release: this-tools-build
 	# runs off a tag event or a specified tag
 	$(MAKE) gitr-release-push
+
+# Releases all builds
+this-release-all: this-tools-build-all
+	${MAKE} gitr-release-push
 	
+## Install external dependencies for tagging
+this-deps:
+	# install git-chglog
+	$(MAKE) go-exts-get
 
-
-### Dummy
-
-# TODO get this inthe right place !!
-
-## build dummy
-build-dummy:
-	@echo "building dummy"
-	@go run multibuild.go -c $(PWD)/.tmp -o $(PWD)/outputs -f $(PWD)/tool/dummy/versions.json -g $(CUR_GIT_URL)
-
-## clean dummy builds
-build-dummy-clean:
-	@echo "clean build dummy"
-	@rm -rf $(PWD)/outputs $(PWD)/.tmp
+## Cleans external dependencies for tagging
+this-deps-clean:
+	$(MAKE) go-exts-clean

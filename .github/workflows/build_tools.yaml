@@ -1,18 +1,13 @@
 name: Build Tools
-on: push
+on:
+  push:
+    tags:
+      - '*'
 jobs:
   build:
     name: Build Tools
     runs-on: ubuntu-latest
     steps:
-      - name: setup env
-        shell: bash
-        run: |
-          echo "::set-env name=GOPATH::${{ github.workspace }}/go"
-          echo "::add-path::${{ github.workspace }}/go/bin"
-          echo "::add-path::$HOME/.pub-cache/bin"
-          mkdir -p ${{ github.workspace }}/go/{src,bin,pkg}
-
       - name: Set up Go 1.14
         uses: actions/setup-go@v2
         with:
@@ -36,59 +31,22 @@ jobs:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
 
-      - name: build tools
-        run:  |
-          pub global activate protoc_plugin
-          go get -u -v google.golang.org/protobuf/cmd/protoc-gen-go
-          make this-tools-build
-
-      - name: "publish action-artifact protoc-gen-configdef"
-        uses: actions/upload-artifact@v1
-        with:
-          name: protoc-gen-configdef
-          path: ${{ github.workspace }}/go/bin/protoc-gen-configdef
-
-      - name: "publish action-artifact bs-dummy"
-        uses: actions/upload-artifact@v1
-        with:
-          name: bs-dummy
-          path: ${{ github.workspace }}/go/bin/bs-dummy
-
-      - name: "publish action-artifact protofig"
-        uses: actions/upload-artifact@v1
-        with:
-          name: bs-protofig
-          path: ${{ github.workspace }}/go/bin/bs-protofig
-
-  release:
-    needs: [build]
-    name: Release Tools
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v2
-
-      - name: Download artefacts dummy linux
-        uses: actions/download-artifact@v1
-        with:
-          name: bs-dummy
-
-      - name: Download artefacts protofig linux
-        uses: actions/download-artifact@v1
-        with:
-          name: protoc-gen-configdef
-
-      - name: Download artefacts protoc-gen-configdef linux
-        uses: actions/download-artifact@v1
-        with:
-          name: bs-protofig
-
-      - name: zip tools
+      - name: Setup Env
+        shell: bash
         run: |
-          zip bs-dummy.zip bs-dummy/bs-dummy
-          zip bs-protofig.zip bs-protofig/bs-protofig
-          zip protoc-gen-configdef.zip protoc-gen-configdef/protoc-gen-configdef
-          ls -alh ${{ github.workspace }}
+          echo "::set-env name=GOPATH::${{ github.workspace }}/go"
+          echo "::add-path::${{ github.workspace }}/go/bin"
+          echo "::add-path::$HOME/.pub-cache/bin"
+          mkdir -p "${{ github.workspace }}"/go/{src,bin,pkg}
+
+      - name: Build Tools for all (supported) platforms
+        run:  |
+          make this-flu-activate-plugin
+          make this-tools-build-all
+
+      - name: Get the current git tag
+        id: get_current_git_tag
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
 
       - name: Create Release
         id: create_release
@@ -96,11 +54,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ steps.get_current_git_tag.outputs.VERSION }}
+          release_name: Release ${{ steps.get_current_git_tag.outputs.VERSION }}
           draft: true
           prerelease: false
-
+          
       - name: Upload tools
         uses: csexton/release-asset-action@v2
         with:

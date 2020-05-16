@@ -36,8 +36,6 @@ gitu-getlibpath:
 gitu-getfspath:
 	echo $(GITU_REPO_OUT_FSPATH)
 
-
-
 gitu-clone:
 	mkdir -p $(GITU_REPO_OUT_FSPATH)
 	cd $(GITU_REPO_OUT_FSPATH) && cd .. && rm -rf $(GITU_REPO_NAME) && git clone https://git@$(GITU_LIB).git

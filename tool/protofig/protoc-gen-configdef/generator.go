@@ -76,7 +76,7 @@ func (p *protoapi) newDefConfig() *DefConfig {
 		fields := map[string]interface{}{}
 		for _, f := range m.Fields {
 			if f.Key != "" && f.Value != nil {
-				fields[f.Key] = f.Value
+				fields[toCamelCase(f.Key)] = f.Value
 			}
 		}
 		newComp := &Component{

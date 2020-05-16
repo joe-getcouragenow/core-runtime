@@ -10,6 +10,9 @@ GO_BUILD_OUT_FSPATH = ???
 # Packages to operate on
 GO_PKG_LIST = ???
 
+# Array of external Golang Dependencies
+GO_EXT_DEPS = ???
+
 ## Print
 go-print: 
 	@echo
@@ -69,6 +72,14 @@ go-display-coverage:
 	@echo Displaying test coverage
 	cd $(GO_FSPATH) && go tool cover -html=cover.out
 
+## Get external dependencies
+go-exts-get:
+	$(foreach DEPS, $(GO_EXT_DEPS), \
+		GO111MODULE=off go get -d $(DEPS) && GO111MODULE=off go get -u -v $(DEPS))
 
-
-
+## Cleans external dependencies
+go-exts-clean:
+	$(foreach DEPS, $(GO_EXT_DEPS), \
+		rm -rf $(GOPATH)/src/$(DEPS) )
+	$(foreach DEPS, $(GO_EXT_DEPS), \
+		rm -rf $(GOPATH)/bin/$(notdir $(DEPS)))

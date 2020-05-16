@@ -1,16 +1,3 @@
-package main_test
-
-import (
-	"encoding/json"
-	config "github.com/getcouragenow/core-runtime/tool/protofig/generated/go"
-	"os"
-	"path/filepath"
-	"testing"
-
-	p "github.com/getcouragenow/core-runtime/tool/protofig"
-)
-
-var testData = `
 {
   "appConfig": [
     {
@@ -63,31 +50,4 @@ var testData = `
       }
     }
   ]
-}
-`
-
-func BenchmarkCreateOutputs(b *testing.B) {
-	var newAppConfig config.DefConfig
-	if err := json.Unmarshal([]byte(testData), &newAppConfig); err != nil {
-		b.Fatalf("Error: unable to marshal to json: %v", err)
-	}
-	path, err := os.Getwd()
-	if err != nil {
-		b.Fatalf("Error: unable to get current dir")
-	}
-	outDir := filepath.Join(path, "output")
-	output := p.NewOutputStruct(&newAppConfig, outDir, "alex")
-	if _, err = os.Stat(outDir); err != nil {
-		err = os.Mkdir(outDir, 0755)
-		if err != nil {
-			b.Fatalf("Error: unable to create directory: %v", err)
-		}
-	}
-	for i := 0; i < b.N; i++ {
-		if err = p.CreateOutputs(output); err != nil {
-			b.Fatalf("Error: unable to create outputs: %v", err)
-		}
-	}
-	b.Logf("Successfully run bench test")
-	os.Remove(outDir)
 }

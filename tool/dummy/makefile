@@ -5,7 +5,6 @@ include $(BOILERPLATE_FSPATH)/core/help.mk
 include $(BOILERPLATE_FSPATH)/core/tool.mk
 include $(BOILERPLATE_FSPATH)/core/go.mk
 
-
 # go build
 override GO_FSPATH:=${PWD}
 
@@ -21,7 +20,7 @@ this-print:
 
 ## Build
 this-build: this-build-clean
-	$(MAKE) go-build 
+	$(MAKE) go-build
 	which ${TOOL_DUMMY_BIN_NAME}
 
 this-build-clean:
@@ -29,10 +28,3 @@ this-build-clean:
 
 this-test:
 	@echo TODO !
-
-
-
-
-
-
-

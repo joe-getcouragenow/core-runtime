@@ -64,5 +64,5 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           release-url: ${{ steps.create_release.outputs.upload_url }}
-          pattern: "*.zip"
+          pattern: "tool/assets/*.zip"
 

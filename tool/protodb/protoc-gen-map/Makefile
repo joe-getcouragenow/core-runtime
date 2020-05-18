@@ -7,11 +7,18 @@ include $(BOILERPLATE_FSPATH)/core/go.mk
 
 FLU_SAMPLE_NAME=cmd/client/flu
 
-GO_FSPATH=$(PWD)/cmd/client/go
+override GO_FSPATH=$(PWD)/cmd/client/go
+override GO_BUILD_OUT_ALL_FSPATH=${PWD}/builds/
+override GO_BIN_NAME=protoc-gen-map
+override GO_EXTS_DEPS = github.com/jackskj/protoc-gen-map
 
-## deps
+## install external dependencies
 this-dep:
-	go get -u github.com/jackskj/protoc-gen-map
+	${MAKE} go-exts-get
+
+## clean external dependencies
+this-dep-clean:
+	${MAKE} go-exts-clean
 
 ## int the proj
 this-init:

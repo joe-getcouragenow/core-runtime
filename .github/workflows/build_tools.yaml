@@ -1,18 +1,13 @@
 name: Build Tools
-on: push
+on:
+  push:
+    tags:
+      - "*"
 jobs:
   build:
     name: Build Tools
     runs-on: ubuntu-latest
     steps:
-      - name: setup env
-        shell: bash
-        run: |
-          echo "::set-env name=GOPATH::${{ github.workspace }}/go"
-          echo "::add-path::${{ github.workspace }}/go/bin"
-          echo "::add-path::$HOME/.pub-cache/bin"
-          mkdir -p ${{ github.workspace }}/go/{src,bin,pkg}
-
       - name: Set up Go 1.14
         uses: actions/setup-go@v2
         with:
@@ -20,45 +15,40 @@ jobs:
           id: go
 
       - name: Install Protobuf
-        run:  |
+        run: |
           sudo apt update && sudo apt install -y protobuf-compiler libprotobuf-dev
 
       - name: Setup Java
         uses: actions/setup-java@v1
         with:
-          java-version: '8.x'
+          java-version: "8.x"
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v1
         with:
-          channel: 'beta'
+          channel: "beta"
 
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
 
-      - name: build tools
-        run:  |
-          pub global activate protoc_plugin
-          go get -u -v google.golang.org/protobuf/cmd/protoc-gen-go
-          make this-tools-build
+      - name: Setup Env
+        shell: bash
+        run: |
+          echo "::set-env name=GOPATH::${{ github.workspace }}/go"
+          echo "::add-path::${{ github.workspace }}/go/bin"
+          echo "::add-path::$HOME/.pub-cache/bin"
+          mkdir -p "${{ github.workspace }}"/go/{src,bin,pkg}
 
-      - name: "publish action-artifact protoc-gen-configdef"
-        uses: actions/upload-artifact@v1
-        with:
-          name: protoc-gen-configdef
-          path: ${{ github.workspace }}/go/bin/protoc-gen-configdef
+      - name: Build Tools for all (supported) platforms
+        run: |
+          make this-flu-activate-plugin
+          make this-tools-build-all
 
-      - name: "publish action-artifact bs-dummy"
-        uses: actions/upload-artifact@v1
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
         with:
-          name: bs-dummy
-          path: ${{ github.workspace }}/go/bin/bs-dummy
-
-      - name: "publish action-artifact protofig"
-        uses: actions/upload-artifact@v1
-        with:
-          name: bs-protofig
-          path: ${{ github.workspace }}/go/bin/bs-protofig
+          name: all-binaries
+          path: ${{ github.workspace }}/tool/assets/*.gz
 
   release:
     needs: [build]
@@ -68,27 +58,24 @@ jobs:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
 
-      - name: Download artefacts dummy linux
-        uses: actions/download-artifact@v1
-        with:
-          name: bs-dummy
+      - name: Get the current git tag
+        id: get_current_git_tag
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
 
-      - name: Download artefacts protofig linux
-        uses: actions/download-artifact@v1
-        with:
-          name: protoc-gen-configdef
-
-      - name: Download artefacts protoc-gen-configdef linux
-        uses: actions/download-artifact@v1
-        with:
-          name: bs-protofig
-
-      - name: zip tools
+      - name: Create assets directory
         run: |
-          zip bs-dummy.zip bs-dummy/bs-dummy
-          zip bs-protofig.zip bs-protofig/bs-protofig
-          zip protoc-gen-configdef.zip protoc-gen-configdef/protoc-gen-configdef
-          ls -alh ${{ github.workspace }}
+          mkdir -p assets
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: all-binaries
+          path: assets
+
+      - name: Display artifacts
+        run: |
+          ls -R
+        working-directory: assets/
 
       - name: Create Release
         id: create_release
@@ -96,8 +83,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ steps.get_current_git_tag.outputs.VERSION }}
+          release_name: Release ${{ steps.get_current_git_tag.outputs.VERSION }}
           draft: true
           prerelease: false
 
@@ -106,5 +93,4 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           release-url: ${{ steps.create_release.outputs.upload_url }}
-          pattern: "*.zip"
-
+          pattern: "assets/*.gz"

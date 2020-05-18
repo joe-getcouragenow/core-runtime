@@ -6,37 +6,38 @@ include $(BOILERPLATE_FSPATH)/core/tool.mk
 include $(BOILERPLATE_FSPATH)/core/gitu.mk
 include $(BOILERPLATE_FSPATH)/core/go.mk
 
-.PHONY: this-dep
-
 # externals
 # external dependencies
-override GO_EXT_DEPS = github.com/envoyproxy/protoc-gen-validate
+override GO_EXT_DEPS = github.com/envoyproxy/protoc-gen-validate google.golang.org/protobuf/cmd/protoc-gen-go
 # go build
 override GO_FSPATH:=${PWD}
 override GO_BUILD_OUT_FSPATH:=${TOOL_PROTOFIG_BIN_FSPATH}
+override GO_BUILD_OUT_ALL_FSPATH=${PWD}/builds
+override GO_BIN_NAME=${TOOL_PROTOFIG_BIN_NAME}
 
-#SUFFIX ?= $(shell git config user.name)
 SUFFIX ?= winwisely
 
 # Print
 this-print:
-	@echo EXTERNAL DEPENDENCIES: ${GO_EXT_DEPS}
-	@echo GO_BIN_NAME: ${GO_BUILD_OUT_FSPATH}
-	@echo GO_BUILD_OUT_FSPATH: ${GO_BUILD_OUT_FSPATH}
+	@echo GO_EXT_DEPS: 				${GO_EXT_DEPS}
+	@echo GO_BUILD_OUT_FSPATH: 		${GO_BUILD_OUT_FSPATH}
+	@echo GO_BUILD_OUT_ALL_FSPATH: 	${GO_BUILD_OUT_ALL_FSPATH}
+	@echo TOOL_PROTOFIG_BIN_NAME: 	${TOOL_PROTOFIG_BIN_NAME}
 
 # called by CI..
 ## build all.
 this-build-all: this-dep this-proto-gen
-	$(MAKE) go-build
+	$(MAKE) go-build-all
 	@echo TOOL_PROTOFIG_BIN_NAME: ${TOOL_PROTOFIG_BIN_NAME}
 
 ## Build
-this-build: this-proto-gen
+this-build: this-dep this-proto-gen
 	${MAKE} go-build
 	which ${TOOL_DUMMY_BIN_NAME}
 
 ## Dep
 this-dep:
+	cd $(PWD)/protoc-gen-configdef && ${MAKE} this-build
 	${MAKE} go-exts-get
 
 ## Dep clean

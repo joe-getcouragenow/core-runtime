@@ -1,8 +1,7 @@
 package main
 
 import (
-	// "github.com/getcouragenow/core-runtime/tool/protoc-gen-map/examples"
-	"github.com/getcouragenow/core-runtime/tool/protodb/protoc-gen-map"
+	"github.com/getcouragenow/core-runtime/tool/protodb/protoc-gen-map/examples"
 )
 
 func main() {

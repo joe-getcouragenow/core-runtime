@@ -14,4 +14,4 @@ https://github.com/empirefox/protoc-gen-dart-ext/tree/master/pkg/arb
 
 ## Reconcilliation
 
-Then wire a simple compare tool in golang to compare each side to see what is orphaned and on which side ( dart arb code or data side)
+Then wire a simple compare tool in golang to compare each side to see what is orphaned and on which side ( dart arb code or data side).

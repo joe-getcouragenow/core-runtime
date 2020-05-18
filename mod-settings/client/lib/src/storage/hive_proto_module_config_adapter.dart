@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+/*import 'package:hive/hive.dart';
 import 'package:mod_settings/src/api/settings.pb.dart';
 
 
@@ -16,3 +16,4 @@ class HiveProtoModuleConfigAdapter extends TypeAdapter<ProtoModuleConfig>{
     writer.write(obj.writeToBuffer());
   }
 }
+*/

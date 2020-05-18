@@ -1,4 +1,4 @@
-import 'package:hive/hive.dart';
+//import 'package:hive/hive.dart';
 import 'package:sys_core/src/api/accounts.pb.dart';
 
 abstract class AccountsRepository {
@@ -12,7 +12,7 @@ abstract class AccountsRepository {
 
   void dispose();
 }
-
+/*
 class LocaleAccountsRepository extends AccountsRepository {
   static final String userBoxName = "LocaleAccountsRepositoryUser";
   static final String campaignBoxName = "LocaleAccountsRepositoryCampaign";
@@ -61,3 +61,4 @@ class LocaleAccountsRepository extends AccountsRepository {
     _campaignBox?.close();
   }
 }
+*/

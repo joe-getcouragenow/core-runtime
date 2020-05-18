@@ -4,6 +4,7 @@ import 'package:mod_settings/mod_settings.dart';
 import 'package:sys_core/sys_core.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await coreInit();
   runApp(ModularApp(module: AppModule()));
 }
@@ -13,7 +14,7 @@ class AppModule extends MainModule {
   List<Bind> get binds => [
         // we have to inject the concrete implementation of
         // CoreSettingsService here!
-        Bind((i) => SettingsService.instance),
+        Bind((i) => SettingsService()),
       ];
 
   @override

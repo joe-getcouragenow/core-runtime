@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:hive/hive.dart';
+//import 'package:hive/hive.dart';
 import 'package:mod_settings/mod_settings.dart';
 import 'package:mod_settings/src/view/settings_view.dart';
 import 'package:mod_settings/src/storage/hive_proto_module_config_adapter.dart';
@@ -8,15 +8,15 @@ import 'package:sys_core/sys_core.dart';
 
 class SettingsModule extends ChildModule {
   SettingsModule() {
-    Hive.registerAdapter(HiveProtoModuleConfigAdapter());
+//    Hive.registerAdapter(HiveProtoModuleConfigAdapter());
   }
 
   @override
   List<Bind> get binds => [
         Bind((i) {
           var moduleConfig = ModuleConfig(
-            moduleID: "mod-main",
-            moduleName: "mod-main-name",
+            moduleID: "mod-settings",
+            moduleName: "mod-settings-title",
             items: [
               ModuleConfigItemBool("key-bool2", true, "second flag here"),
               ModuleConfigItemBool("key-bool", true, "test flag here"),

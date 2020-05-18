@@ -1,20 +1,19 @@
+import 'package:flutter/cupertino.dart';
 import 'package:mod_settings/src/storage/settings_repository_service.dart';
 import 'package:sys_core/sys_core.dart';
 
 class SettingsService extends CoreSettingsService {
-  static final SettingsService _instance = SettingsService._internal();
+  SettingsRepositoryService _settingsService;
 
-  static CoreSettingsService get instance => _instance;
-
-  SettingsService._internal();
+  SettingsService() {
+    _settingsService = SettingsRepositoryService();
+  }
 
   /// this map contains all [ModuleConfig] classes from all submodules
   /// which have registered their settings here
   final Map<String, ModuleConfig> _moduleConfigs = Map<String, ModuleConfig>();
 
   List<ModuleConfig> get moduleConfigs => _moduleConfigs.values.toList();
-
-  final SettingsRepositoryService _settingsService = SettingsRepositoryService();
 
   /// each module which want's to expose its settings have to register
   /// its [ModuleConfig] here

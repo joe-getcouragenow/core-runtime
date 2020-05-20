@@ -1,8 +1,6 @@
 # bs utils
 
 
-
-
 # NOTE: exported as needed by other make files !
 export BS_ROOT_FSPATH := 	$(GOPATH)/src/bin
 

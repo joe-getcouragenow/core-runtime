@@ -34,7 +34,7 @@ As a Dev to contribute you need to do the following.
 	- ``` ssh-add -l  ```
 
 
-- Add the public key to github on the web site
+- Add the public key to github on your github web site
 	- https://github.com/settings/keys
 
 ## SSH Config file
@@ -61,27 +61,19 @@ Host github.com-winwiselyXXX
 add this to .git/config:
 ````
 [user]
-	email = winwisely99@gmail.com
+	email = winwiselyXXX@gmail.com
 ````
 
 then:
 
 ````
-make git-fork-setup
+make gitr-fork-setup
 ````
 
 
 
 ## Install golang and then tools
 
-Its basically flutter and golang. If you already have these then your fine.
+See: boilerplate/core/os
 
-Dont forget to put in the right env variables. !!
-
-For mac. https://github.com/getcouragenow/core-runtime/blob/master/os/mac/.bashrc#L15
-For other OS's see folder for your OS.
-
-Then in Tools, you need hover and i18n.
-See: https://github.com/getcouragenow/core-runtime/tree/master/tool
-- run the make file for hover and i18n folders.
-
+Run the correct one for your OS.

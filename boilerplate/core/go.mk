@@ -22,7 +22,7 @@ GO_SUPPORTED_ARCHS=386 amd64 arm arm64
 # Go cross-compile all output directory
 GO_BUILD_OUT_ALL_FSPATH = ???
 
-# Go binary name (TODO this is already defined in boilerplate/core/tool.mk)
+# Go binary name (already defined in boilerplate/core/tool.mk)
 GO_BIN_NAME = ???
 
 # Install external dependencies function

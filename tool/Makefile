@@ -47,14 +47,14 @@ this-build-all:
 	@echo Lang
 	cd ./lang && $(MAKE) this-build-all
 
-	@echo protoc-gen-configdef
-	cd ./protofig/protoc-gen-configdef && $(MAKE) this-build-all
+	#@echo protoc-gen-configdef
+	#cd ./protofig/protoc-gen-configdef && $(MAKE) this-build-all
 
 #	@echo protoc-gen-map
 #	cd ./protodb/protoc-gen-map && $(MAKE) this-build-all
 
-	@echo Protofig
-	cd ./protofig && $(MAKE) this-build-all
+	#@echo Protofig
+	#cd ./protofig && $(MAKE) this-build-all
 
 #	@echo Protodb
 #	cd ./protodb && $(MAKE) this-build-all
@@ -74,17 +74,17 @@ this-build:
 	@echo Lang
 	cd ./lang && $(MAKE) this-build
 
-	@echo protoc-gen-configdef
-	cd ./protofig/protoc-gen-configdef && $(MAKE) this-build
+	#@echo protoc-gen-configdef
+	#cd ./protofig/protoc-gen-configdef && $(MAKE) this-build
 
-	@echo protoc-gen-map
-	cd ./protodb/protoc-gen-map && $(MAKE) this-build
+	#@echo protoc-gen-map
+	#cd ./protodb/protoc-gen-map && $(MAKE) this-build
 
-	@echo Protofig
-	cd ./protofig && $(MAKE) this-build
+	#@echo Protofig
+	#cd ./protofig && $(MAKE) this-build
 
-	@echo Protodb
-	cd ./protodb && $(MAKE) this-build
+	#@echo Protodb
+	#cd ./protodb && $(MAKE) this-build
 	# -- PLUS ALL OTHER TOOLS !!
 
 	@echo -- TOOLS - BUILD ALL: finish --

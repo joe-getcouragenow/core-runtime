@@ -27,11 +27,13 @@ this-print:
 # called by CI..
 ## build all.
 this-build-all: this-dep this-proto-gen
+	# builds to the build path.
 	$(MAKE) go-build-all
 	@echo TOOL_PROTOFIG_BIN_NAME: ${TOOL_PROTOFIG_BIN_NAME}
 
 ## Build
 this-build: this-dep this-proto-gen
+	# builds to the gobin path.
 	${MAKE} go-build
 	which ${TOOL_DUMMY_BIN_NAME}
 

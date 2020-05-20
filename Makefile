@@ -21,26 +21,11 @@ override GO_EXT_DEPS = github.com/git-chglog/git-chglog/cmd/git-chglog
 	# mkdir -p "${{ github.workspace }}"/go/{src,bin,pkg}
 
 this-flu-activate-plugin:
+	# TODO move down to tools obviously.
 	pub global activate protoc_plugin
-
-## Print all settings
-this-print:
-	TODO
 
 
 ### BUILD Phase
-
-## Builds all tools
-this-tools-build:
-	# reach into each ones make and build
-	cd tool/dummy && $(MAKE) this-build
-	cd tool/protofig/protoc-gen-configdef && $(MAKE) this-build
-	cd tool/protofig && $(MAKE) this-build
-
-## Builds all tools for all platforms
-this-tools-build-all:
-	# go to tool and run Makefile from there
-	cd tool && ${MAKE} this-assets-release
 
 # CI and local call this
 ## Build everything
@@ -49,18 +34,12 @@ this-build:
 	cd ./tool && $(MAKE) this-build
 	cd ./sys-core && $(MAKE) this-build
 	cd ./mod-settings && $(MAKE) this-build
-	cd ./mod-account && $(MAKE) this-build
+	#cd ./mod-account && $(MAKE) this-build
+	cd ./example/main/maintemplate && $(MAKE) this-build
 
 	@echo -- Root - BUILD: finish --
 
-this-tools-docker-build:
-	docker build -t bs-protofig:latest -f tool/protofig/Dockerfile .
 
-this-tools-docker-example:
-	docker run -v $(PWD):/hostvol \
-		--rm -it bs-protofig:latest /protofig/bs-protofig \
-		-f /hostvol/example/protofig/config.default-winwisely.json \
-		-u winwiselyexample -o /hostvol/example/protofig/output
 
 ### TEST Phase
 
@@ -102,3 +81,26 @@ this-deps:
 ## Cleans external dependencies for tagging
 this-deps-clean:
 	$(MAKE) go-exts-clean
+
+
+### OTHER
+
+
+this-tools-build:
+	# reach into each ones make and build
+	cd tool/dummy && $(MAKE) this-build
+	cd tool/protofig/protoc-gen-configdef && $(MAKE) this-build
+	cd tool/protofig && $(MAKE) this-build
+
+this-tools-build-all:
+	# go to tool and run Makefile from there
+	cd tool && ${MAKE} this-assets-release
+
+this-tools-docker-build:
+	docker build -t bs-protofig:latest -f tool/protofig/Dockerfile .
+
+this-tools-docker-example:
+	docker run -v $(PWD):/hostvol \
+		--rm -it bs-protofig:latest /protofig/bs-protofig \
+		-f /hostvol/example/protofig/config.default-winwisely.json \
+		-u winwiselyexample -o /hostvol/example/protofig/output

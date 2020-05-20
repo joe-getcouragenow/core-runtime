@@ -16,8 +16,7 @@ dependencies:
   intl: ^0.16.1
   intl_translation: ^0.17.9
   protobuf: ^1.0.1
-  hive: ^1.4.1+1
-  hive_flutter: ^0.3.0+2
+ # hive: ^1.4.1+1
 
 dev_dependencies:
   flutter_test:

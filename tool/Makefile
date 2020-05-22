@@ -74,6 +74,12 @@ this-build:
 	@echo Lang
 	cd ./lang && $(MAKE) this-build
 
+	@echo Hover
+	cd ./hover && $(MAKE) this-build
+
+	@echo Hugo
+	cd ./hugo && $(MAKE) this-build
+
 	#@echo protoc-gen-configdef
 	#cd ./protofig/protoc-gen-configdef && $(MAKE) this-build
 
@@ -85,6 +91,7 @@ this-build:
 
 	#@echo Protodb
 	#cd ./protodb && $(MAKE) this-build
+
 	# -- PLUS ALL OTHER TOOLS !!
 
 	@echo -- TOOLS - BUILD ALL: finish --
@@ -103,18 +110,23 @@ this-test:
 	@echo Lang
 	cd ./lang && $(MAKE) this-test
 
-	@echo Protofig
-	cd ./protofig && $(MAKE) this-test
+	@echo Hover
+	cd ./hover && $(MAKE) this-test
 
-	@echo Protodb
-	cd ./protodb && $(MAKE) this-test
+	@echo Hugo
+	cd ./hugo && $(MAKE) this-test
+
+	#@echo Protofig
+	#cd ./protofig && $(MAKE) this-test
+
+	#@echo Protodb
+	#cd ./protodb && $(MAKE) this-test
 	# -- PLUS ALL OTHER TOOLS !!
 
 	@echo -- TOOLS - TEST ALL: finish --
 
-# ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-# Release Phase
-# ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+### Release Phase
+
 
 ## Copy all binaries to assets path
 this-assets-release: this-build-all this-clean-assets this-create-assets-dir

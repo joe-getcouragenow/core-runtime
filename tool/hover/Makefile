@@ -1,10 +1,53 @@
 # https://github.com/go-flutter-desktop/hover
 
-include ../../boilerplate/tool/tools.mk
+# includes
+BOILERPLATE_FSPATH=./../../boilerplate
 
-override LIB_NAME=hover
-override LIB_ORG=go-flutter-desktop
-override LIB_TAG=v0.39.0
-override LIB_BIN_NAME=$(LIB_NAME)
+include $(BOILERPLATE_FSPATH)/core/help.mk
+include $(BOILERPLATE_FSPATH)/core/tool.mk
+include $(BOILERPLATE_FSPATH)/core/go.mk
+
+
+# go
+override GO_FSPATH=${PWD}
+
+override GO_BIN_NAME=${TOOL_HOVER_BIN_NAME}
+override GO_BUILD_OUT_FSPATH:=${TOOL_HOVER_BIN_FSPATH}
+
+override GO_BUILD_OUT_ALL_FSPATH=${PWD}/assets
+
+
+
+# Print
+this-print:
+	@echo
+	@echo -- TOOL Hover --
+
+	@echo GO_FSPATH 				${GO_FSPATH}
+	@echo TOOL_DUMMY_BIN_NAME 		${TOOL_DUMMY_BIN_NAME}
+	@echo GO_BUILD_OUT_FSPATH: 		${GO_BUILD_OUT_FSPATH}
+	@echo GO_BUILD_OUT_ALL_FSPATH: 	${GO_BUILD_OUT_ALL_FSPATH}
+
+	@echo
+
+## Build
+this-build: this-build-clean
+	$(MAKE) go-build
+	which ${TOOL_DUMMY_BIN_NAME}
+
+this-build-clean:
+	rm -rf ${TOOL_DUMMY_BIN_NAME}
+
+## Build all platforms
+this-build-all: this-build-clean-all
+	$(MAKE) go-build-all
+
+this-build-clean-all:
+	$(MAKE) go-build-clean-all
+
+
+this-test:
+	@echo TODO !
+
 
 

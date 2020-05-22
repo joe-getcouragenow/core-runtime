@@ -9,26 +9,30 @@ include $(BOILERPLATE_FSPATH)/core/go.mk
 
 # go build
 override GO_FSPATH:=${PWD}
-override GO_BUILD_OUT_ALL_FSPATH=${PWD}/builds
+
 override GO_BIN_NAME=${TOOL_LANG_BIN_NAME}
 override GO_BUILD_OUT_FSPATH:=${TOOL_LANG_BIN_FSPATH}
+
+override GO_BUILD_OUT_ALL_FSPATH=${PWD}/assets
 
 # Print
 this-print:
 	@echo
 	@echo -- TOOL LANG --
+	@echo GO_FSPATH 				${GO_FSPATH}
+	@echo TOOL_LANG_BIN_NAME 		${TOOL_LANG_BIN_NAME}
 	@echo GO_BUILD_OUT_FSPATH: 		${GO_BUILD_OUT_FSPATH}
 	@echo GO_BUILD_OUT_ALL_FSPATH: 	${GO_BUILD_OUT_ALL_FSPATH}
-	@echo TOOL_LANG_BIN_NAME 		${TOOL_LANG_BIN_NAME}
+	
 	@echo
 
 ## Build
 this-build: this-build-clean
 	$(MAKE) go-build 
-	which ${TOOL_LANG_BIN_NAME}
+	which ${GO_BIN_NAME}
 
 this-build-clean:
-	rm -rf ${TOOL_LANG_BIN_NAME}
+	rm -rf ${GO_BIN_NAME}
 
 ## Build all platforms
 this-build-all: this-build-clean-all

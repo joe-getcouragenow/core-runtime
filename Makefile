@@ -10,15 +10,8 @@ include $(BOILERPLATE_FSPATH)/core/gitr.mk
 include $(BOILERPLATE_FSPATH)/core/tool.mk
 include $(BOILERPLATE_FSPATH)/core/go.mk
 
-override GO_EXT_DEPS = github.com/git-chglog/git-chglog/cmd/git-chglog
+#override GO_EXT_DEPS = github.com/git-chglog/git-chglog/cmd/git-chglog
 
-## OS Deps for CI
-# this-os-deps:
-	# TODO doesn't work
-	# echo "::set-env name=GOPATH::${{ github.workspace }}/go"
-	# echo "::add-path::${{ github.workspace }}/go/bin"
-	# echo "::add-path::$HOME/.pub-cache/bin"
-	# mkdir -p "${{ github.workspace }}"/go/{src,bin,pkg}
 
 this-flu-activate-plugin:
 	# TODO move down to tools obviously.

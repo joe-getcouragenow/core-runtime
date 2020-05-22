@@ -17,7 +17,7 @@ jobs:
       matrix:
         target:
           - "this-build"
-          - "this-check"
+          - "this-test"
     steps:
       - name: Set up Go 1.14.3
         uses: actions/setup-go@v1

@@ -8,6 +8,8 @@ steps:
   - name: telgram_notify
     image: appleboy/drone-telegram
     when:
+      # By default, the pipeline will not be executed if prior pipelines fail. 
+      # We want to receive a notification regardless of what happened, so this does the trick.
       status:
         - success
         - failure

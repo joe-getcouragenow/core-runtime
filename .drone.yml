@@ -3,9 +3,15 @@ type: docker
 name: default
    
 steps:
-- name: test
+- name: test-make
   image: alpine
   commands:
   - echo hello
   - echo world
   - make this-build
+- name: test-flutter
+  image: cirrusci/flutter:stable
+  commands:
+    - sudo chown -R cirrus:cirrus .
+    - flutter doctor
+    - flutter test

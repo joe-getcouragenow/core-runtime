@@ -1,5 +1,7 @@
 # core-runtime
 
+[![Build Status](https://cloud.drone.io/api/badges/getcouragenow/core-runtime/status.svg)](https://cloud.drone.io/getcouragenow/core-runtime)
+
 Core runtime code used by all Projects.
 
 Contains:

@@ -37,6 +37,7 @@ steps:
         🌐 {{ build.link }}
         {{/success}}
 
+# Run Flutter
 - name: test-flutter
   image: cirrusci/flutter:stable
   commands:
@@ -44,6 +45,7 @@ steps:
     - flutter doctor
     - flutter test
 
+# Run makefile
 - name: test-make
   image: alpine
   commands:

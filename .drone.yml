@@ -14,9 +14,9 @@ steps:
     settings:
       # The secrets below can be entered from the Drone UI for this repo
       token:
-        from_secret: drone-telegram-token
+        from_secret: telegram-token
       to:
-        from_secret: telegram_chat_id
+        from_secret: telegram-to
       format: markdown
       message: >
         {{#success build.status}}

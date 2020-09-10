@@ -28,10 +28,10 @@ this-flu-activate-plugin:
 this-build:
 	@echo -- Root - BUILD: start --
 	cd ./tool && $(MAKE) this-build
-	cd ./sys-core && $(MAKE) this-build
-	cd ./mod-settings && $(MAKE) this-build
+	#cd ./sys-core && $(MAKE) this-build
+	#cd ./mod-settings && $(MAKE) this-build
 	#cd ./mod-account && $(MAKE) this-build
-	cd ./example/main/maintemplate && $(MAKE) this-build
+	#cd ./example/main/maintemplate && $(MAKE) this-build
 
 	@echo -- Root - BUILD: finish --
 
@@ -45,9 +45,9 @@ this-test:
 	@echo -- Root - BUILD: start --
 
 	cd ./tool && $(MAKE) this-test
-	cd ./sys-core && $(MAKE) this-test
-	cd ./mod-settings && $(MAKE) this-test
-	cd ./mod-account && $(MAKE) this-test
+	#cd ./sys-core && $(MAKE) this-test
+	#cd ./mod-settings && $(MAKE) this-test
+	#cd ./mod-account && $(MAKE) this-test
 
 	@echo -- Root - BUILD: finish --
 

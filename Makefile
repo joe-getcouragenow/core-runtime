@@ -12,6 +12,9 @@ include $(BOILERPLATE_FSPATH)/core/go.mk
 
 #override GO_EXT_DEPS = github.com/git-chglog/git-chglog/cmd/git-chglog
 
+## Print all settings
+this-print:
+	$(MAKE) go-print
 
 this-flu-activate-plugin:
 	# TODO move down to tools obviously.
@@ -36,8 +39,8 @@ this-build:
 
 ### TEST Phase
 
-# CI and local cal this
-## tets all tool and modules
+# CI and local call this
+## Tests all tool and modules
 this-test:
 	@echo -- Root - BUILD: start --
 
@@ -50,7 +53,6 @@ this-test:
 
 
 ## TAGS AND GIT
-
 
 ## Tags the tools via git, example: VERSION="YOUR_TAG" make this-tag
 this-tag: this-deps

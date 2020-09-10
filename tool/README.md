@@ -1,15 +1,31 @@
 # tool
 
-## protobuf and grpc tools
+This holds the built tools we need.
 
-Which golang protobuf lib to use ?
 
-github.com/golang/protobuf
 
-Why ?
+## Status
 
-See: https://github.com/protocolbuffers/protobuf-go/releases/tag/v1.20.0#v1.20-grpc-support
-The v1.20 protoc-gen-go does not support generating gRPC service definitions.
-In the future, gRPC service generation will be supported by a new protoc-gen-go-grpc plugin provided by the Go gRPC project.
+Currently builds the things we need:
 
-The github.com/golang/protobuf version of protoc-gen-go continues to support gRPC and will continue to do so for the foreseeable future.
+- Lang
+
+- Hover
+
+- Hugo
+
+## Using
+
+./boilerplate/core/tool.mk encapsulates the use of these tools, so invoke them from there always.
+
+See the make file of each tool for example usage.
+
+
+
+## Build
+
+``` make this-build ```
+
+## Test
+
+``` make this-test ```

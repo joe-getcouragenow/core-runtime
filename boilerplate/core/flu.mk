@@ -35,6 +35,15 @@ flu-config:
 	$(MAKE) flu-gen-lang
 	$(MAKE) flu-gen-lang-dart
 
+## Checks flutter dependencies.
+flu-dep-check:
+	# https://pub.dev/packages/multipack
+	# Tools to manage flutter packages across projecst, allowing all of them to be upgraded togther.
+	# We need this because we have so many projects
+
+	#pub global activate multipack
+	#multipack analyze
+
 ## Run Flutter Tests
 flu-test:
 	$(MAKE) flu-gen-lang-clean

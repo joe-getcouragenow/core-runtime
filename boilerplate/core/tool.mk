@@ -87,3 +87,8 @@ tool-get:
 	# lang
 	go install github.com/getcouragenow/core-runtime/tool/lang
 	cp $(TOOL_ROOT_FSPATH)/lang $(TOOL_LANG_BIN_FSPATH)
+
+tool-delete:
+	rm $(TOOL_DUMMY_BIN_FSPATH)
+	rm $(TOOL_HOVER_BIN_FSPATH)
+	rm $(TOOL_LANG_BIN_FSPATH)

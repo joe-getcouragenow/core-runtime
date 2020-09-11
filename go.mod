@@ -7,6 +7,7 @@ require (
 	github.com/Masterminds/semver v1.5.0 // indirect
 	github.com/Masterminds/sprig v2.22.0+incompatible // indirect
 	github.com/aokoli/goutils v1.1.0 // indirect
+	github.com/getcouragenow/core-runtime/tool/dummy v0.0.0-20200911051232-1d5bedc4a27f // indirect
 	github.com/getcouragenow/core-runtime/tool/hover v0.0.0-20200910171704-4cfe4c7ec925 // indirect
 	github.com/getcouragenow/core-runtime/tool/lang v0.0.0-20200910171704-4cfe4c7ec925 // indirect
 	github.com/go-flutter-desktop/hover v0.43.0

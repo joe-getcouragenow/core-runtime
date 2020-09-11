@@ -47,6 +47,12 @@ this-build-all:
 	@echo Lang
 	cd ./lang && $(MAKE) this-build-all
 
+	@echo Hover
+	cd ./hover && $(MAKE) this-build-all
+
+	@echo Hugo
+	cd ./hugo && $(MAKE) this-build-all
+
 	#@echo protoc-gen-configdef
 	#cd ./protofig/protoc-gen-configdef && $(MAKE) this-build-all
 

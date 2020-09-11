@@ -86,7 +86,7 @@ go-build-clean-all:
 	@echo "Removing builds for all supported archs and platforms"
 	rm -rf $(GO_BUILD_OUT_ALL_FSPATH)
 
-## Clean goalng OS caches
+## Clean golang OS caches
 go-os-clean:
 	# go stuff
 	go clean -cache

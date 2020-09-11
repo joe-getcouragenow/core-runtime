@@ -79,6 +79,8 @@ github.com/flynn/go-shlex v0.0.0-20150515145356-3f9db97f8568 h1:BHsljHzVlRcyQhjr
 github.com/flynn/go-shlex v0.0.0-20150515145356-3f9db97f8568/go.mod h1:xEzjJPgXI435gkrCt3MPfRiAkVrwSbHsst4LCFVfpJc=
 github.com/fsnotify/fsnotify v1.4.7 h1:IXs+QLmnXW2CcXuY+8Mzv/fWEsPGWxqefPtCP5CnV9I=
 github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMoQvtojpjFo=
+github.com/getcouragenow/core-runtime/tool/dummy v0.0.0-20200911051232-1d5bedc4a27f h1:L/gh+5nMv/JDjHDWlxGPq3sEGMeUUXDLPS1Cub62X2s=
+github.com/getcouragenow/core-runtime/tool/dummy v0.0.0-20200911051232-1d5bedc4a27f/go.mod h1:D0UEHJJmU+XP85OaN6NOVuROYRJ/zXGAip3GiQu7RlU=
 github.com/getcouragenow/core-runtime/tool/hover v0.0.0-20200910171704-4cfe4c7ec925 h1:5n+NRujUWh2K7n/dB5ZdndZzosOC/3WCO5Of+zqs01Y=
 github.com/getcouragenow/core-runtime/tool/hover v0.0.0-20200910171704-4cfe4c7ec925/go.mod h1:rOuzZw97H0gTA6HG7fndF042lj1L7j9QKJ+0tAA6YUo=
 github.com/getcouragenow/core-runtime/tool/lang v0.0.0-20200910171704-4cfe4c7ec925 h1:EwW0Q34wVqYCzLrRcXbZU3VtwexFt5/aoCmiBINIs/I=

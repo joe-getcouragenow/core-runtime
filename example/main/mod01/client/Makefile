@@ -1,5 +1,5 @@
 # includes
-BOILERPLATE_FSPATH=./../../../boilerplate
+BOILERPLATE_FSPATH=./../../../../boilerplate
 
 include $(BOILERPLATE_FSPATH)/core/help.mk
 include $(BOILERPLATE_FSPATH)/core/os.mk
@@ -9,15 +9,27 @@ include $(BOILERPLATE_FSPATH)/core/flu.mk
 include $(BOILERPLATE_FSPATH)/core/go.mk
 
 
+override FLU_SAMPLE_NAME = ./
+override FLU_LIB_NAME = ./
+
+
 ## Print all settings
 this-print:
 	$(MAKE) flu-print
 	$(MAKE) go-print
 	$(MAKE) tool-print
 
-this-build:
-	# does gen and web build, which is enough for CI.
-	cd ./client && $(MAKE) this-build
+## Gets the tools it needs
+this-dep:
+	$(MAKE) tool-get
 
+## Generates all code
+this-gen:
+	$(MAKE) flu-gen
+	$(MAKE) flu-gen-lang-all
 
+# Builds all outputs
+this-build: this-gen
+	$(MAKE) flu-web-build
+	# Add Desktop as needed
 

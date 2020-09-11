@@ -28,7 +28,9 @@ this-flu-activate-plugin:
 this-build:
 	@echo -- Root - BUILD: start --
 	cd ./tool && $(MAKE) this-build
-	#cd ./sys-core && $(MAKE) this-build
+	cd ./sys-core && $(MAKE) this-build
+
+	# Below are commented out because Packages does not need the modules below yet.
 	#cd ./mod-settings && $(MAKE) this-build
 	#cd ./mod-account && $(MAKE) this-build
 	#cd ./example/main/maintemplate && $(MAKE) this-build
@@ -45,7 +47,9 @@ this-test:
 	@echo -- Root - BUILD: start --
 
 	cd ./tool && $(MAKE) this-test
-	#cd ./sys-core && $(MAKE) this-test
+	cd ./sys-core && $(MAKE) this-test
+
+	# Below are commented out because Packages does not need the modules below yet.
 	#cd ./mod-settings && $(MAKE) this-test
 	#cd ./mod-account && $(MAKE) this-test
 
@@ -53,6 +57,8 @@ this-test:
 
 
 ## TAGS AND GIT
+
+# TODO: Move this to a .mk file so all Repos can use it.
 
 ## Tags the tools via git, example: VERSION="YOUR_TAG" make this-tag
 this-tag: this-deps

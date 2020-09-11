@@ -73,4 +73,17 @@ tool-print:
 	@echo -- TOOL Print : end --
 	@echo
 
+## Gets the build tools via go get and puts them in the right location.
+tool-get:
 
+	# dummy
+	go install github.com/getcouragenow/core-runtime/tool/dummy
+	cp $(TOOL_ROOT_FSPATH)/dummy $(TOOL_DUMMY_BIN_FSPATH)
+
+	# hover
+	go install github.com/getcouragenow/core-runtime/tool/hover
+	cp $(TOOL_ROOT_FSPATH)/hover $(TOOL_HOVER_BIN_FSPATH)
+
+	# lang
+	go install github.com/getcouragenow/core-runtime/tool/lang
+	cp $(TOOL_ROOT_FSPATH)/lang $(TOOL_LANG_BIN_FSPATH)

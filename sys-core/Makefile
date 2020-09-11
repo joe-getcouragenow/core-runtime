@@ -6,20 +6,19 @@ include $(BOILERPLATE_FSPATH)/core/os.mk
 include $(BOILERPLATE_FSPATH)/core/tool.mk
 
 
-DEP_GEN_FSPATH=./../boilerplate
-DEP_LIB_PROTOGEN=protofig
+# NOT needed for v2
+#DEP_GEN_FSPATH=./../boilerplate
+#DEP_LIB_PROTOGEN=protofig
 
 
 this-dep:
-	# go to tool and run make.
+	# Builds the tools in tools folder
+	# Other repos will get them from core-bs.
 	cd ../tool && $(MAKE) this-build
 
 this-gen:
 
 	@echo -- GEN ALL: start --
-
-	#$(MAKE) this-tools-build
-	#$(MAKE) this-mods-build
 
 	@echo -- GEN ALL: finish --
 

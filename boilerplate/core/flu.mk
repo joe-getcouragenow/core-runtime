@@ -172,7 +172,7 @@ flu-gen-lang-print:
 	@echo FLU_LANG_FILE_PREFIX_OUT: 		$(FLU_LANG_FILE_PREFIX_OUT)
 	@echo	
 
-## Grabs the bianry tool needed ( REDUNDANT when using BS tool )
+## Grabs the binary tool needed ( REDUNDANT when using BS tool )
 flu-gen-lang-dep:
 	go get -u github.com/getcouragenow/core-runtime/tool/i18n
 
@@ -186,10 +186,10 @@ flu-gen-lang-all:
 
 ## Generates lang for sub modules
 flu-gen-lang-submodules:
-	#TODO joe make recursive
-	cd ../../mod-account/client && make lang-gen-flu
-	cd ../../mod-chat/client && make lang-gen-flu
-	cd ../../mod-main/client && make lang-gen-flu
+	# TODO joe make recursive where the main build calls down itself.
+	#cd ../../mod-account/client && make lang-gen-flu
+	#cd ../../mod-chat/client && make lang-gen-flu
+	#cd ../../mod-main/client && make lang-gen-flu
 
 ## Cleans up all language code
 flu-gen-lang-clean:

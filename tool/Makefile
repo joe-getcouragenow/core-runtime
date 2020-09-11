@@ -80,6 +80,8 @@ this-build:
 	@echo Hugo
 	cd ./hugo && $(MAKE) this-build
 
+	# The things below do not work yet and are not going to be needed for v2
+
 	#@echo protoc-gen-configdef
 	#cd ./protofig/protoc-gen-configdef && $(MAKE) this-build
 
@@ -115,6 +117,8 @@ this-test:
 
 	@echo Hugo
 	cd ./hugo && $(MAKE) this-test
+
+	# The things below do not work yet and are not going to be needed for v2
 
 	#@echo Protofig
 	#cd ./protofig && $(MAKE) this-test
